@@ -160,6 +160,15 @@ body {
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/shaders/CopyShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/shaders/BokehShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/shaders/GammaCorrectionShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/EffectComposer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/RenderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/ShaderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/BokehPass.js"></script>
 <script>
 (() => {
 const CAPTURE = /[?&#]capture/.test(location.search + location.hash);
@@ -212,6 +221,19 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x050304);
 scene.fog = new THREE.FogExp2(0x0b0507, 0.035);
 const camera = new THREE.PerspectiveCamera(40, 9 / 16, 0.03, 80);
+// post-processing: multisampled HDR buffer -> depth of field -> bloom -> sRGB
+const POST = !!(THREE.EffectComposer && THREE.BokehPass && THREE.UnrealBloomPass);
+let composer = null, bokeh = null, bloom = null;
+if (POST) {
+  const rt = new THREE.WebGLRenderTarget(16, 16, { type: THREE.HalfFloatType, samples: 4 });
+  composer = new THREE.EffectComposer(renderer, rt);
+  composer.addPass(new THREE.RenderPass(scene, camera));
+  bokeh = new THREE.BokehPass(scene, camera, { focus: 2, aperture: .002, maxblur: .007 });
+  composer.addPass(bokeh);
+  bloom = new THREE.UnrealBloomPass(new THREE.Vector2(256, 256), .55, .55, .82);
+  composer.addPass(bloom);
+  composer.addPass(new THREE.ShaderPass(THREE.GammaCorrectionShader));
+}
 
 /* ---------------- PROCEDURAL TEXTURES ---------------- */
 function canvasTex(w, h, draw, repeat) {
@@ -487,6 +509,16 @@ function strandTex(hex) {
     }
   });
 }
+// body profile (radius vs height): rounded shoulders, a waist, hips — shared by the shell and every garment
+const BODY = [[.03, 0], [.08, .5], [.18, .78], [.3, .83], [.45, .74], [.6, .8], [.74, .93], [.86, 1.0], [.95, .95], [1.01, .72], [1.05, .4], [1.08, 0]];
+function unitBody(y) {
+  if (y <= BODY[0][0] || y >= BODY[BODY.length - 1][0]) return 0;
+  for (let i = 0; i < BODY.length - 1; i++) if (y <= BODY[i + 1][0]) {
+    const [y0, r0] = BODY[i], [y1, r1] = BODY[i + 1], u = (y - y0) / (y1 - y0);
+    return lerp(r0, r1, (1 - Math.cos(u * Math.PI)) / 2);
+  }
+  return 0;
+}
 function makeActor(o) {
   const shell = chitinMaps(o.shell), hs = chitinMaps(o.shell, 0), fs = chitinMaps(new THREE.Color(o.shell).offsetHSL(0, -.05, .06).getHex(), 0);
   const chitin = new THREE.MeshPhysicalMaterial({ map: shell.map, bumpMap: shell.bump, bumpScale: .01, roughness: .32, clearcoat: 1, clearcoatRoughness: .1 });
@@ -497,9 +529,9 @@ function makeActor(o) {
   const hairM = new THREE.MeshPhysicalMaterial({ map: strandTex(o.hairColor), roughness: .32, clearcoat: .7, clearcoatRoughness: .2, sheen: .5, sheenColor: new THREE.Color(o.hairColor).offsetHSL(0, 0, .08), side: THREE.DoubleSide });
   const R = new THREE.Group(); R.scale.setScalar(o.scale); R.userData = {};
   const body = new THREE.Group(); R.add(body);
-  const torso = sph(1, chitin, 32); torso.scale.set(o.chest || .3, .5, .25); torso.position.y = .55; body.add(torso);
+  const unit = unitBody;
+  const torso = lathe((() => { const p = []; for (let i = 0; i <= 40; i++) { const y = lerp(.03, 1.08, i / 40); p.push([Math.max(.001, unit(y)), y]); } return p; })(), chitin, 40); torso.scale.set(o.chest || .3, 1, .25); body.add(torso);
   for (const s of [-1, 1]) { const w = sph(1, wingMat, 24); w.scale.set(.17, .55, .05); w.position.set(s * .1, .5, -.22); w.rotation.set(-.12, 0, s * .07); body.add(w); }
-  const unit = y => Math.sqrt(Math.max(0, 1 - Math.pow((y - .55) / .5, 2)));
   const prof = (y0, y1, k, n = 14) => { const p = []; for (let i = 0; i <= n; i++) { const y = lerp(y0, y1, i / n); p.push([Math.max(.02, unit(y) * k), y]); } return p; };
   const cw = o.chest ? o.chest / .3 : 1;
   const wear = mesh => { mesh.scale.set(.3 * cw, 1, .25); body.add(mesh); return mesh; };
@@ -521,9 +553,9 @@ function makeActor(o) {
     wear(lathe(prof(.02, .2, 1.09), trouser, 32));
     sleeve = suit; cuff = shirt;
   } else if (o.cloth === 'dress') {
-    const red = new THREE.MeshPhysicalMaterial({ color: 0xa00a18, roughness: .38, sheen: 1, sheenColor: new THREE.Color(0xff5a6a), sheenRoughness: .3, clearcoat: .35 });
+    const red = new THREE.MeshPhysicalMaterial({ color: 0x7a0410, roughness: .34, sheen: .8, sheenColor: new THREE.Color(0xd01828), sheenRoughness: .35, clearcoat: .4 });
     wear(lathe(prof(.42, .9, 1.08), red, 48));
-    const skirt = lathe([[.33, .44], [.34, .3], [.31, .1], [.33, -.1], [.42, -.33], [.55, -.5]], red, 48); skirt.scale.set(1, 1, .85); body.add(skirt);
+    const skirt = lathe([[.245, .45], [.255, .3], [.25, .12], [.29, -.1], [.39, -.33], [.52, -.5]], red, 48); skirt.scale.set(1, 1, .85); body.add(skirt);
     const neck = new THREE.Mesh(new THREE.TorusGeometry(.1, .008, 8, 40), M.gold); neck.position.set(0, 1.02, .04); neck.rotation.x = Math.PI / 2 - .25; body.add(neck);
     const pend = new THREE.Mesh(new THREE.OctahedronGeometry(.022), new THREE.MeshPhysicalMaterial({ color: 0xff1030, roughness: 0, transmission: .4, emissive: 0x300008 })); pend.position.set(0, .95, .15); body.add(pend);
     const rose = sph(.04, new THREE.MeshStandardMaterial({ color: 0x6a0008, roughness: .6 }), 12); rose.position.set(.2, .86, .17); body.add(rose);
@@ -698,57 +730,91 @@ const chandLight = new THREE.PointLight(0xffc98a, 1.0, 7, 1.4); chandLight.posit
 const rim = new THREE.SpotLight(0x8aa6ff, 2.2, 7, .7, .5, 1); rim.position.set(0, 2.8, -2.8); rim.target.position.set(0, 1.4, 0); scene.add(rim, rim.target);
 const faceLight = new THREE.SpotLight(0xffe0c8, 0, 4, .35, .7, 1); scene.add(faceLight, faceLight.target);
 const redLight = new THREE.PointLight(0xff1020, 0, 3, 1.5); scene.add(redLight);
+const kicker = new THREE.SpotLight(0xffd9b0, 0, 4, .45, .6, 1.2); scene.add(kicker, kicker.target);
 const doorLight = new THREE.PointLight(0xffc880, 0, 2, 2); doorLight.position.set(DOOR_X - .3, .1, DOOR_Z); scene.add(doorLight);
 
 /* ---------------- POSING ---------------- */
 const tmpV = new THREE.Vector3();
 function headPos(R) { return R.userData.head.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(0, .12 * R.scale.x, 0)); }
-function pose(R, P, t) {
+function pose(R, P, t, rt = t) {
   const U = R.userData;
-  R.position.y = .52 * R.scale.x + (P.bob || 0);
-  if (P.face !== undefined) R.rotation.y = P.face;
-  U.body.rotation.x = -.02 + (P.lean || 0);
-  U.body.rotation.z = P.sway || 0;
-  for (const L of U.legs) { L.hip.rotation.set(-.04 - (P.lean || 0), 0, L.s * .06); L.kn.rotation.x = .08; }
+  // frame-rate independent smoothing (same result at 24 fps export and 60 fps playback)
+  const dt = clamp(rt - (U.lt ?? rt), 0, .1); U.lt = rt;
+  const fk = k => 1 - Math.pow(1 - k, dt * 30);
+  const talk = P.mouth || 0;
+  U.talkEnv = lerp(U.talkEnv || 0, talk > .05 ? 1 : 0, fk(.12));
+  // weight shift and posture
+  const shift = Math.sin(t * .45 + R.id * 2.1);
+  R.position.y = .52 * R.scale.x + (P.bob || 0) + Math.abs(shift) * -.004;
+  if (P.face !== undefined) { U.face = U.face === undefined ? P.face : lerp(U.face, P.face, fk(P.faceK ?? .08)); R.rotation.y = U.face; }
+  U.body.position.x = shift * .012;
+  U.body.rotation.x = -.02 + (P.lean || 0) + U.talkEnv * Math.sin(t * 2.2 + R.id) * .012;
+  U.body.rotation.z = (P.sway || 0) + shift * .018;
+  U.body.rotation.y = U.talkEnv * Math.sin(t * 1.3 + R.id) * .04;
+  for (const L of U.legs) { L.hip.rotation.set(-.04 - (P.lean || 0), 0, L.s * .06 - shift * .018); L.kn.rotation.x = .08 + Math.max(0, shift * L.s) * .12; }
   const br = Math.sin(t * 1.6 + R.id) * .01 * (1 + (P.breath || 0) * 3);
   U.body.scale.set(1 + br * .3, 1 + br * .15, 1 + br * .3);
   R.updateMatrixWorld(true);
+  const prevYaw = U.yaw, prevPitch = U.pitch;
   if (P.look) {
     const local = R.worldToLocal(tmpV.copy(P.look));
     const ry = Math.atan2(local.x, local.z), rp = -Math.atan2(local.y - 1.35, Math.hypot(local.x, local.z));
     const yaw = clamp(ry * .7, -.85, .85), pitch = clamp(rp * .6, -.45, .5);
-    const k = P.snap ?? .12;
+    const k = fk(P.snap ?? .12);
     U.yaw = lerp(U.yaw, yaw, k); U.pitch = lerp(U.pitch, pitch, k);
-    U.eyaw = lerp(U.eyaw, clamp(ry - U.yaw, -.45, .45), .35); U.epitch = lerp(U.epitch, clamp(rp - U.pitch, -.3, .3), .35);
+    // eyes lead the head, with small saccades
+    const sac = Math.floor(t * 1.7 + R.id * 5);
+    const jx = (hash(sac + R.id) - .5) * .06, jy = (hash(sac * 1.3 + R.id) - .5) * .04;
+    U.eyaw = lerp(U.eyaw, clamp(ry - U.yaw + jx, -.45, .45), fk(.5)); U.epitch = lerp(U.epitch, clamp(rp - U.pitch + jy, -.3, .3), fk(.5));
   }
-  U.neck.rotation.set(U.pitch * .7 + (P.headTilt || 0), U.yaw, P.roll || 0);
-  U.eyes.forEach(E => { E.ig.rotation.set(U.epitch + (P.dart ? noise1(t * 3 + E.s) * .0 : 0), U.eyaw + (P.dart || 0) * noise1(t * 2.3), 0); });
+  // conversational head motion
+  const nod = U.talkEnv * (Math.sin(t * 6.5) * .025 * (.4 + talk) + Math.sin(t * 2.1 + R.id) * .03);
+  U.neck.rotation.set(U.pitch * .7 + (P.headTilt || 0) + nod, U.yaw + U.talkEnv * Math.sin(t * 1.7) * .04, (P.roll || 0) + Math.sin(t * .7 + R.id) * .02 + U.talkEnv * Math.sin(t * 2.6) * .025);
+  U.eyes.forEach(E => { E.ig.rotation.set(U.epitch, U.eyaw + (P.dart || 0) * noise1(t * 2.3), 0); });
   const anger = P.anger || 0, sad = P.sad || 0, shock = P.shock || 0;
-  const blink = !P.noBlink && (Math.sin(t * .9 + R.id * 3) > .985 || (P.closed || 0) > .5) ? 1 : 0;
-  const lidOpen = clamp(-1.2 + anger * .45 + sad * .3 - shock * .35 + blink * 1.2, -1.6, 0);
+  // natural blinks: irregular intervals, smooth close/open; extra blink on big head turns
+  const per = 3.1 + hash(Math.floor((t + R.id * 1.3) / 3.6)) * 2.6, ph = (t + R.id * 1.3) % per;
+  let blink = ph < .16 ? Math.sin(ph / .16 * Math.PI) : 0;
+  if (Math.abs(U.yaw - prevYaw) / Math.max(dt, 1e-3) > 1.6) U.turnBlink = 1;
+  U.turnBlink = Math.max(0, (U.turnBlink || 0) - dt * 6); blink = Math.max(blink, Math.sin(Math.min(1, U.turnBlink) * Math.PI));
+  if (P.noBlink) blink = 0;
+  if ((P.closed || 0) > .5) blink = 1;
+  U.anger = lerp(U.anger || 0, anger, fk(.15)); U.sad = lerp(U.sad || 0, sad, fk(.1)); U.shock = lerp(U.shock || 0, shock, fk(.3));
+  const A_ = U.anger, S_ = U.sad, K_ = U.shock;
+  const lidOpen = clamp(-1.2 + A_ * .45 + S_ * .3 - K_ * .35 + blink * 1.25, -1.6, 0);
   U.lids.forEach(l => { l.rotation.x = lidOpen; });
-  U.lowers.forEach(l => { l.rotation.x = clamp(1.2 - anger * .25 - sad * .2 + shock * .15 - (P.squint || 0), .4, 1.5); });
+  U.lowers.forEach(l => { l.rotation.x = clamp(1.2 - A_ * .25 - S_ * .2 + K_ * .15 - (P.squint || 0) - blink * .15, .4, 1.5); });
   U.brows.forEach((b, i) => {
     const s = i ? 1 : -1;
-    b.rotation.z = s * (-anger * .5 + sad * .45);
-    b.position.y = .245 + shock * .03 + sad * .012 - anger * .012;
+    b.rotation.z = s * (-A_ * .5 + S_ * .45) + (i ? 1 : -1) * talk * .04;
+    b.position.y = .245 + K_ * .03 + S_ * .012 - A_ * .012 + U.talkEnv * Math.max(0, Math.sin(t * 3.1)) * .006;
   });
-  const m = clamp((P.mouth || 0) + shock * .35, 0, 1.2);
-  U.inner.scale.set(.028 + m * .006, .006 + m * .028, .01);
-  U.lower.position.y = -.006 - m * .03;
-  U.teeth.visible = m > .2;
-  U.mands.forEach((md, i) => { md.rotation.z = (i ? -1 : 1) * (.1 + m * .35); });
+  const m = clamp(talk + K_ * .35, 0, 1.2);
+  U.m = lerp(U.m || 0, m, fk(.55));
+  U.inner.scale.set(.028 + U.m * .006, .006 + U.m * .028, .01);
+  U.lower.position.y = -.006 - U.m * .03;
+  U.teeth.visible = U.m > .2;
+  U.mands.forEach((md, i) => { md.rotation.z = (i ? -1 : 1) * (.1 + U.m * .35); });
+  // antennae: idle sway + lag behind head motion
+  const vy = (U.yaw - prevYaw) / Math.max(dt, 1e-3), vp = (U.pitch - prevPitch) / Math.max(dt, 1e-3);
+  U.antY = lerp(U.antY || 0, clamp(-vy * .08, -.25, .25), fk(.15)); U.antP = lerp(U.antP || 0, clamp(-vp * .08, -.2, .2), fk(.15));
   for (const A of U.antennae) A.chain.forEach((seg, i) => {
     if (!i) return; const ag = P.agit || 0;
-    seg.rotation.x = .07 + Math.sin(t * (1.2 + ag * 6) + i * .5 + A.s) * (.035 + ag * .06) - (P.droop || 0) * .05;
-    seg.rotation.z = A.s * (-.05 + Math.sin(t * .9 + i * .3) * .025);
+    seg.rotation.x = .07 + Math.sin(t * (1.2 + ag * 6) - i * .45 + A.s) * (.035 + ag * .06) - (P.droop || 0) * .05 + U.antP * .1 * i / 14;
+    seg.rotation.z = A.s * (-.05 + Math.sin(t * .9 - i * .3) * .025) + U.antY * .1 * i / 14;
   });
+  // arms ease toward their targets; gestures while speaking
   const arm = P.arms || {};
   for (const A of U.arms) {
     const a = arm[A.s < 0 ? 'L' : 'R'] || {};
-    A.up.rotation.set(a.ux ?? -.08, a.uy ?? 0, a.uz ?? A.s * .13);
-    A.el.rotation.set(a.ex ?? -.25, 0, 0);
-    A.hand.rotation.x = a.hx ?? .2;
+    const g = U.talkEnv * (A.s > 0 ? 1 : .5);
+    const tx = (a.ux ?? -.08) - g * (.12 + Math.sin(t * 3.3 + A.s) * .08);
+    const tz = (a.uz ?? A.s * .13) + g * A.s * Math.sin(t * 2.4) * .05;
+    const te = (a.ex ?? -.25) - g * (.35 + Math.sin(t * 3.3 + A.s + .6) * .15);
+    const k = fk(a.k ?? P.armK ?? .14);
+    A.up.rotation.x = lerp(A.up.rotation.x, tx, k); A.up.rotation.y = lerp(A.up.rotation.y, a.uy ?? 0, k); A.up.rotation.z = lerp(A.up.rotation.z, tz, k);
+    A.el.rotation.x = lerp(A.el.rotation.x, te, k);
+    A.hand.rotation.x = lerp(A.hand.rotation.x, (a.hx ?? .2) + g * Math.sin(t * 4 + A.s) * .2, k);
   }
   for (const L of U.mids) { L.p.rotation.x = Math.sin(t * 2.2 + L.s + R.id) * .06 * (1 + (P.agit || 0) * 2); }
   for (const T of U.tears) {
@@ -772,7 +838,7 @@ function stateAt(t) {
   const turn = sstep(50, 54.8, t);
   // MEHMET
   const meh = {
-    face: knock ? lerp(FACE_M_AYSE, FACE_M_AYSE + .35, sstep(59.2, 59.6, t)) : lerp(FACE.mehmet, FACE_M_AYSE, turn),
+    face: knock ? FACE_M_AYSE + .35 : lerp(FACE.mehmet, FACE_M_AYSE, turn), faceK: knock ? .2 : .5,
     look: knock ? doorP : t < 24.5 ? H.mustafa : t < 30 ? H.ayse : t < 50 ? H.mustafa : H.ayse,
     snap: knock ? .3 : t > 50 ? .05 : .12,
     anger: clamp(.75 + yell1 * .25 - sstep(30.2, 30.7, t) * .4 - sstep(44.3, 44.8, t) * 1.2, 0, 1),
@@ -805,7 +871,7 @@ function stateAt(t) {
     arms: {},
   };
   if (shout > .05) ay.arms.R = { ux: lerp(-.1, -1.3, shout), uz: lerp(.13, -.2, shout), ex: -.2, hx: .4 };
-  if (t > 45 && t < 59.3) { const k = sstep(45, 46.5, t); ay.arms.L = { ux: lerp(-.1, -2.0, k), uz: lerp(-.13, -.55, k), ex: lerp(-.25, -2.2, k) }; ay.arms.R = { ux: lerp(-.1, -2.0, k), uz: lerp(.13, .55, k), ex: lerp(-.25, -2.2, k) }; }
+  if (t > 45 && t < 59.3) { const k = sstep(45, 46.5, t); ay.arms.L = { ux: lerp(-.1, -1.55, k), uz: lerp(-.13, -.6, k), ex: lerp(-.25, -2.35, k), hx: .6 }; ay.arms.R = { ux: lerp(-.1, -1.55, k), uz: lerp(.13, .6, k), ex: lerp(-.25, -2.35, k), hx: .6 }; }
   // MUSTAFA
   const breathe = pulse(35.6, 36.8, 38.2, 39.2, t);
   const mu = {
@@ -843,7 +909,7 @@ const SHOTS = [
   { s: 50.0, e: 55.0, rel: 'ayse', tgt: 'mehmet', p0: V(.25, .1, -.7), p1: V(.32, .08, -.85), t0: V(0, -.1, 0), t1: V(0, -.08, 0), fov0: 30, fov1: 28 },
   { s: 55.0, e: 59.2, rel: 'ayse', p0: V(-1.3, .05, 1.5), p1: V(-1.05, .03, 1.2), t0: V(0, -.05, 0), t1: V(0, -.04, 0), fov0: 30, fov1: 27 },
   { s: 59.2, e: 61.2, p0: V(-.2, 1.65, 2.4), p1: V(.1, 1.6, 2.2), t0: V(-.4, 1.6, -.1), t1: V(2.9, 1.3, .5), fov0: 42, fov1: 40, whip: true },
-  { s: 61.2, e: 65.0, p0: V(1.75, .95, 1.6), p1: V(2.1, .8, 1.15), t0: V(2.95, 1.0, .5), t1: V(2.95, .7, .5), fov0: 40, fov1: 34 },
+  { s: 61.2, e: 65.0, focus: V(2.95, .9, .5), p0: V(1.75, .95, 1.6), p1: V(2.1, .8, 1.15), t0: V(2.95, 1.0, .5), t1: V(2.95, .7, .5), fov0: 40, fov1: 34 },
   { s: 65.0, e: 70, p0: V(2.1, .8, 1.15), p1: V(2.1, .8, 1.15), t0: V(2.95, .7, .5), t1: V(2.95, .7, .5), fov0: 34, fov1: 34 },
 ];
 const ACT = () => ({ mehmet, ayse, mustafa });
@@ -898,7 +964,7 @@ function overlays(t) {
 function renderAt(t) {
   t = clamp(t, 0, DUR - .001);
   const st = stateAt(t), ti = idleT(t);
-  pose(mehmet, st.meh, ti); pose(ayse, st.ay, ti); pose(mustafa, st.mu, ti);
+  pose(mehmet, st.meh, ti, t); pose(ayse, st.ay, ti, t); pose(mustafa, st.mu, ti, t);
   // knocks: the door leaves jolt
   const k = Math.max(0, ...[59.2, 59.55, 59.9, 61.0].map(x => t >= x ? Math.max(0, 1 - (t - x) / .18) : 0));
   leaves.forEach((l, i) => { l.position.z = -k * .012 * (i ? 1 : .8); l.rotation.y = k * .006 * (i ? -1 : 1); });
@@ -918,7 +984,16 @@ function renderAt(t) {
   // re-aim face light after the camera moved
   if (S.rel) { const hp = headPos(ACT()[S.rel]); faceLight.position.copy(camera.position).sub(hp).multiplyScalar(1.5).add(hp).add(V(0, .45, 0)); }
   overlays(t);
-  renderer.render(scene, camera);
+  // focus on whoever the shot is about; kicker light behind them, opposite the camera
+  const subj = S.rel ? headPos(ACT()[S.rel]) : S.focus ? S.focus : camTarget;
+  if (S.tgt) subj.copy(headPos(ACT()[S.tgt]));
+  kicker.position.copy(subj).sub(camera.position).setY(0).normalize().multiplyScalar(1.3).add(subj).add(V(0, .55, 0));
+  kicker.target.position.copy(subj); kicker.intensity = S.rel || S.tgt ? 2.6 : .8;
+  if (POST) {
+    bokeh.uniforms.focus.value = camera.position.distanceTo(subj);
+    bokeh.uniforms.aperture.value = (S.rel || S.tgt) ? .0032 : .0009;
+    composer.render();
+  } else renderer.render(scene, camera);
   $('#prog i').style.width = (t / DUR * 100) + '%';
 }
 
@@ -1055,6 +1130,7 @@ function resize() {
   const r = stage.getBoundingClientRect();
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.setSize(r.width, r.height, false);
+  if (POST) { composer.setPixelRatio(renderer.getPixelRatio()); composer.setSize(r.width, r.height); }
   camera.aspect = r.width / r.height; camera.updateProjectionMatrix();
 }
 window.addEventListener('resize', () => { resize(); if (!playing) renderAt(posterT); });
