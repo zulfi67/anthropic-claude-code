@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="VVolt : le kit vélo qui recharge ton téléphone en pédalant, en abonnement dès 50 € par mois. Offre professionnelle à 300 € la batterie.">
+<meta property="og:title" content="VVolt · Formules">
+<meta property="og:description" content="Dès 50 €/mois, kit Pro inclus. Professionnels : 300 € la batterie.">
+<meta name="theme-color" content="#0B1026">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23FFB547'/%3E%3Cpath d='M18 5 L9 18 H16 L13 27 L23 13 H16 Z' fill='%230B1026'/%3E%3C/svg%3E">
+<style>body{margin:0}img{max-width:100%}</style>
+<title>VVolt Formules</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: "night ride" — one committed dark world. Wide illustrated hero (headlight beam), then a bento of features, a to-scale week chart, a comparison table and a sticky buy bar. */
+:root {
+  color-scheme: dark;
+  --night: #0B1026;
+  --night-2: #121A3A;
+  --night-3: #1B2550;
+  --line: #2A3566;
+  --star: #F4F1FF;
+  --mist: #A7B0D6;
+  --amber: #FFB547;
+  --amber-deep: #F28A1B;
+  --amber-glow: rgba(255, 181, 71, .18);
+  --mint: #6FE3C1;
+  --skin: #B9774A;
+  --jacket: #3F5BD8;
+  --pant: #1E2A5C;
+  --f-display: "Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
+  --f-body: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --gut-l: max(16px, env(safe-area-inset-left, 0px));
+  --gut-r: max(16px, env(safe-area-inset-right, 0px));
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--night); color: var(--star); font-family: var(--f-body); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; padding-bottom: 84px; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--night); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: var(--gut-l); padding-right: var(--gut-r); }
+h1, h2, h3 { font-family: var(--f-display); margin: 0; text-wrap: balance; line-height: 1.02; letter-spacing: -0.02em; }
+h2 { font-size: clamp(2rem, 4.8vw, 3.5rem); font-weight: 800; }
+h3 { font-size: 1.25rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
+p { margin: 0; }
+.kicker { font-family: var(--f-mono); font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--amber); }
+.lead { color: var(--mist); font-size: 1.12rem; max-width: 60ch; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 8px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; border: 0; cursor: pointer; text-decoration: none; font: 700 1rem/1 var(--f-body); padding: 17px 26px; border-radius: 14px; transition: transform .15s, box-shadow .15s; }
+.btn-amber { background: var(--amber); color: #1A1003; box-shadow: 0 0 0 0 var(--amber-glow); }
+.btn-amber:hover { transform: translateY(-2px); box-shadow: 0 10px 40px var(--amber-glow); }
+.btn-line { color: var(--star); box-shadow: inset 0 0 0 1.5px var(--line); background: transparent; }
+.btn-line:hover { box-shadow: inset 0 0 0 1.5px var(--mist); }
+
+/* Nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: rgba(11, 16, 38, .82); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.logo { display: flex; align-items: center; gap: 10px; font-family: var(--f-display); font-weight: 800; font-size: 1.3rem; text-decoration: none; letter-spacing: -0.02em; }
+.logo svg { width: 32px; height: 32px; }
+.nav-links { display: flex; gap: 26px; font-weight: 600; font-size: .95rem; color: var(--mist); }
+.nav-links a { text-decoration: none; } .nav-links a:hover { color: var(--star); }
+.nav .btn { padding: 11px 18px; font-size: .92rem; border-radius: 12px; }
+@media (max-width: 880px) { .nav-links { display: none; } }
+
+/* Hero */
+.hero { padding-block: 56px 0; overflow: hidden; }
+.hero-top { display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items: end; }
+.hero h1 { font-size: clamp(2.9rem, 7.4vw, 6.2rem); font-weight: 800; line-height: .92; letter-spacing: -0.04em; }
+.hero h1 em { font-style: normal; color: var(--amber); }
+.hero-side { display: grid; gap: 22px; padding-bottom: 8px; }
+.price-tag { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.price { font-family: var(--f-display); font-weight: 800; font-size: 3.4rem; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.price sup { font-size: .45em; vertical-align: .9em; margin-left: 2px; }
+.price-sub { color: var(--mist); font-size: .95rem; }
+.hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-scene { margin-top: 40px; position: relative; }
+.hero-scene svg { width: 100%; height: auto; display: block; }
+.live { position: absolute; right: max(16px, 4%); top: 8%; background: rgba(18, 26, 58, .88); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; display: grid; gap: 8px; min-width: 200px; backdrop-filter: blur(6px); }
+.live-row { display: flex; justify-content: space-between; gap: 16px; font-size: .85rem; color: var(--mist); }
+.live-row b { font-family: var(--f-mono); color: var(--star); font-variant-numeric: tabular-nums; }
+.live-bar { height: 8px; border-radius: 99px; background: var(--night-3); overflow: hidden; }
+.live-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--amber-deep), var(--amber)); border-radius: inherit; transition: width .8s ease; }
+.live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mint); display: inline-block; margin-right: 6px; animation: blink 1.6s infinite; }
+@keyframes blink { 50% { opacity: .3; } }
+@media (max-width: 900px) { .hero-top { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .live { position: static; margin: 12px 0 0; } }
+
+/* Illustration helpers */
+.f-star { fill: var(--star); } .f-mist { fill: var(--mist); } .f-amber { fill: var(--amber); } .f-deep { fill: var(--amber-deep); }
+.f-n2 { fill: var(--night-2); } .f-n3 { fill: var(--night-3); } .f-line { fill: var(--line); }
+.f-skin { fill: var(--skin); } .f-jacket { fill: var(--jacket); } .f-pant { fill: var(--pant); } .f-mint { fill: var(--mint); }
+.spin { animation: spin 1.4s linear infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.flow { stroke-dasharray: 5 9; animation: flow 1s linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -28; } }
+.twinkle { animation: blink 3s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .spin, .flow, .twinkle, .live-dot { animation: none; } html { scroll-behavior: auto; } }
+
+/* Strip */
+.strip { border-block: 1px solid var(--line); background: var(--night-2); }
+.strip .wrap { display: flex; justify-content: space-between; gap: 24px; padding-block: 22px; flex-wrap: wrap; }
+.strip span { display: inline-flex; gap: 10px; align-items: center; font-weight: 600; color: var(--mist); font-size: .95rem; }
+.strip svg { width: 20px; height: 20px; color: var(--amber); flex: none; }
+
+section.band { padding-block: 100px; }
+.head { display: grid; gap: 16px; max-width: 780px; margin-bottom: 48px; }
+
+/* Bento */
+.bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+.tile { background: var(--night-2); border: 1px solid var(--line); border-radius: 24px; padding: 28px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.tile p { color: var(--mist); }
+.tile .num { font-family: var(--f-display); font-weight: 800; font-size: 3rem; line-height: 1; color: var(--amber); letter-spacing: -0.03em; }
+.tile .num small { font-size: .4em; color: var(--mist); font-weight: 600; letter-spacing: 0; }
+.t-a { grid-column: span 3; grid-row: span 2; background: radial-gradient(120% 90% at 100% 0%, rgba(255,181,71,.16), transparent 60%), var(--night-2); }
+.t-b, .t-c { grid-column: span 3; }
+.t-d, .t-e, .t-f { grid-column: span 2; }
+.tile svg.ic { width: 40px; height: 40px; color: var(--amber); }
+.t-a svg.art { width: 100%; height: auto; margin-top: 8px; }
+@media (max-width: 900px) { .bento { grid-template-columns: 1fr 1fr; } .t-a { grid-column: span 2; grid-row: auto; } .t-b, .t-c, .t-d, .t-e, .t-f { grid-column: span 1; } }
+@media (max-width: 560px) { .bento { grid-template-columns: 1fr; } .t-a, .t-b, .t-c, .t-d, .t-e, .t-f { grid-column: span 1; } }
+
+/* Kit */
+.kit { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.kit-art svg { width: 100%; height: auto; }
+.kit-list { list-style: none; margin: 0; padding: 0; display: grid; }
+.kit-list li { display: grid; grid-template-columns: 40px 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.kit-list li:first-child { border-top: 1px solid var(--line); }
+.kit-list .k { font-family: var(--f-mono); font-weight: 600; color: var(--amber); font-size: .9rem; padding-top: 2px; }
+.kit-list b { display: block; font-weight: 700; }
+.kit-list small { color: var(--mist); font-size: .92rem; }
+@media (max-width: 860px) { .kit { grid-template-columns: 1fr; } }
+
+/* Week chart */
+.week { background: var(--night-2); border: 1px solid var(--line); border-radius: 24px; padding: 32px; display: grid; grid-template-columns: 1fr 280px; gap: 40px; }
+.chart { display: grid; grid-template-columns: 44px 1fr; gap: 10px; min-width: 0; }
+.axis { position: relative; height: 240px; font-family: var(--f-mono); font-size: .75rem; color: var(--mist); }
+.axis span { position: absolute; right: 0; transform: translateY(50%); }
+.plot { position: relative; height: 240px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; align-items: end; border-bottom: 1px solid var(--line); }
+.plot .grid { position: absolute; left: 0; right: 0; height: 1px; background: var(--line); opacity: .5; }
+.bar { position: relative; background: linear-gradient(180deg, var(--amber), var(--amber-deep)); border-radius: 8px 8px 2px 2px; min-height: 2px; }
+.bar b { position: absolute; top: -22px; left: 50%; transform: translateX(-50%); font-family: var(--f-mono); font-size: .72rem; white-space: nowrap; font-weight: 600; }
+.days { grid-column: 2; display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; text-align: center; font-family: var(--f-mono); font-size: .78rem; color: var(--mist); }
+.week-sum { display: grid; gap: 18px; align-content: center; }
+.week-sum .big { font-family: var(--f-display); font-weight: 800; font-size: 3.6rem; line-height: 1; color: var(--amber); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.week-sum p { color: var(--mist); }
+.week-foot { grid-column: 1 / -1; color: var(--mist); font-size: .82rem; }
+@media (max-width: 860px) { .week { grid-template-columns: 1fr; padding: 22px; } }
+
+/* Compare */
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 20px; }
+.cmp { width: 100%; border-collapse: collapse; min-width: 640px; font-size: .95rem; }
+.cmp th, .cmp td { padding: 16px 18px; text-align: left; border-bottom: 1px solid var(--line); }
+.cmp tr:last-child td, .cmp tr:last-child th { border-bottom: 0; }
+.cmp thead th { font-family: var(--f-mono); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--mist); font-weight: 600; }
+.cmp thead th.me { color: var(--amber); }
+.cmp tbody th { font-weight: 600; }
+.cmp td.me { background: rgba(255,181,71,.07); font-weight: 600; }
+.yes { color: var(--mint); font-weight: 700; } .no { color: var(--mist); opacity: .7; }
+
+/* Specs */
+.specs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 40px; }
+.spec { padding: 18px 0; border-top: 1px solid var(--line); display: grid; gap: 4px; }
+.spec span { color: var(--mist); font-size: .88rem; }
+.spec b { font-family: var(--f-mono); font-weight: 600; font-size: 1rem; }
+@media (max-width: 860px) { .specs { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .specs { grid-template-columns: 1fr; } }
+
+/* Offer */
+.offer { position: relative; border-radius: 28px; overflow: hidden; background: radial-gradient(100% 120% at 0% 0%, rgba(255,181,71,.22), transparent 55%), var(--night-2); border: 1px solid var(--line); display: grid; grid-template-columns: 1.1fr .9fr; }
+.offer-l { padding: 48px; display: grid; gap: 20px; align-content: center; min-width: 0; }
+.offer-r { padding: 48px; border-left: 1px solid var(--line); display: grid; gap: 18px; align-content: center; min-width: 0; }
+.incl { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.incl li { display: flex; gap: 12px; align-items: center; }
+.incl svg { width: 20px; height: 20px; color: var(--mint); flex: none; }
+.qty-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.stepper { display: inline-flex; align-items: center; border-radius: 12px; box-shadow: inset 0 0 0 1.5px var(--line); }
+.stepper button { width: 46px; height: 46px; border: 0; background: transparent; color: var(--star); font-size: 1.3rem; cursor: pointer; border-radius: 12px; }
+.stepper output { min-width: 30px; text-align: center; font-family: var(--f-mono); font-weight: 600; }
+.total { font-family: var(--f-mono); color: var(--mist); font-variant-numeric: tabular-nums; }
+.status { min-height: 1.6em; color: var(--mint); font-weight: 600; }
+@media (max-width: 860px) { .offer { grid-template-columns: 1fr; } .offer-l, .offer-r { padding: 28px 22px; } .offer-r { border-left: 0; border-top: 1px solid var(--line); } }
+
+
+/* Plans */
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
+.plan { position: relative; background: var(--night-2); border: 1px solid var(--line); border-radius: 24px; padding: 30px 26px; display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.plan.pop { border: 2px solid var(--amber); background: radial-gradient(120% 60% at 50% 0%, rgba(255,181,71,.14), transparent 70%), var(--night-2); }
+.plan .badge { position: absolute; top: -13px; left: 26px; background: var(--amber); color: #1A1003; font: 700 .75rem var(--f-mono); letter-spacing: .08em; text-transform: uppercase; padding: 5px 10px; border-radius: 8px; }
+.plan-name { font-family: var(--f-display); font-weight: 800; font-size: 1.6rem; letter-spacing: -0.02em; }
+.plan-desc { color: var(--mist); font-size: .95rem; min-height: 3em; }
+.plan-price { display: flex; align-items: baseline; gap: 6px; }
+.plan-price b { font-family: var(--f-display); font-weight: 800; font-size: 3.4rem; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.plan-price span { color: var(--mist); font-weight: 600; }
+.plan-total { font-family: var(--f-mono); font-size: .82rem; color: var(--mist); margin-top: -10px; }
+.plan ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; flex: 1; align-content: start; }
+.plan li { display: grid; grid-template-columns: 20px 1fr; gap: 10px; font-size: .95rem; }
+.plan li svg { width: 20px; height: 20px; color: var(--mint); margin-top: 2px; }
+.plan li.plus { color: var(--star); font-weight: 600; }
+.plan li.plus svg { color: var(--amber); }
+.plan .btn { justify-content: center; width: 100%; }
+.plan-status { min-height: 1.4em; color: var(--mint); font-weight: 600; font-size: .9rem; }
+.swap { display: grid; grid-template-columns: auto 1fr auto 1fr auto; align-items: center; gap: 6px; font: 600 .72rem var(--f-mono); color: var(--mist); background: var(--night-3); border-radius: 12px; padding: 10px 12px; }
+.swap i { height: 2px; background: var(--line); }
+.swap .mid { color: var(--amber); }
+.plan-opts { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 28px; }
+.plan-opts label { font-weight: 600; }
+.plan-opts select, .pro-form input, .pro-form select { font: 600 1rem var(--f-body); padding: 12px 14px; border-radius: 12px; background: var(--night-3); color: var(--star); border: 1.5px solid var(--line); max-width: 100%; }
+.legal { color: var(--mist); font-size: .82rem; margin-top: 18px; max-width: 80ch; }
+@media (max-width: 960px) { .plans { grid-template-columns: 1fr; max-width: 560px; } }
+
+/* Pro */
+.pro { border-radius: 28px; border: 1px solid var(--line); background: linear-gradient(135deg, #16204A, #0E1532); display: grid; grid-template-columns: 1.1fr .9fr; overflow: hidden; }
+.pro-l { padding: 48px; display: grid; gap: 18px; align-content: start; min-width: 0; }
+.pro-r { padding: 48px; border-left: 1px solid var(--line); display: grid; gap: 16px; align-content: start; min-width: 0; background: rgba(11,16,38,.5); }
+.pro-uses { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.pro-uses li { display: grid; grid-template-columns: 20px 1fr; gap: 12px; color: var(--mist); }
+.pro-uses li b { color: var(--star); }
+.pro-uses svg { width: 20px; height: 20px; color: var(--amber); margin-top: 3px; }
+.pro-price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.pro-form { display: grid; gap: 12px; }
+.pro-form label { font-weight: 600; font-size: .92rem; display: grid; gap: 6px; }
+.pro-calc { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding-top: 12px; font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.pro-calc b { color: var(--amber); font-size: 1.2rem; }
+@media (max-width: 860px) { .pro { grid-template-columns: 1fr; } .pro-l, .pro-r { padding: 28px 22px; } .pro-r { border-left: 0; border-top: 1px solid var(--line); } }
+
+/* FAQ */
+.faq { max-width: 840px; display: grid; gap: 12px; }
+.faq details { background: var(--night-2); border: 1px solid var(--line); border-radius: 16px; padding: 0 22px; }
+.faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; padding: 20px 0; font-weight: 700; font-size: 1.05rem; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--amber); font-family: var(--f-mono); font-size: 1.3rem; line-height: 1; transition: transform .2s; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { padding-bottom: 20px; color: var(--mist); }
+
+footer { padding-block: 40px; color: var(--mist); font-size: .9rem; border-top: 1px solid var(--line); }
+footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+
+/* Sticky buy bar */
+.buybar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: rgba(18, 26, 58, .94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.buybar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.buybar-info { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.buybar-info svg { width: 44px; height: 30px; flex: none; }
+.buybar-info b { display: block; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.buybar-info span { color: var(--mist); font-size: .85rem; font-family: var(--f-mono); }
+.buybar .btn { padding: 13px 20px; border-radius: 12px; white-space: nowrap; }
+@media (max-width: 420px) { .buybar-info svg { display: none; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="bike" viewBox="0 0 200 120" overflow="visible">
+      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="45" cy="85" r="31" stroke-width="3"/>
+        <circle cx="155" cy="85" r="31" stroke-width="3"/>
+        <path d="M45 85 L95 88 L84 40 Z" stroke-width="3.2"/>
+        <path d="M84 42 L143 40 L148 54 L95 88" stroke-width="3.2"/>
+        <path d="M148 54 L155 85" stroke-width="3.2"/>
+        <path d="M143 40 L141 29 M134 29 L150 27" stroke-width="3.2"/>
+        <path d="M84 40 L82 33 M74 33 L92 33" stroke-width="3.4"/>
+        <circle cx="95" cy="88" r="8" stroke-width="2.4"/>
+      </g>
+    </symbol>
+    <symbol id="spokes" viewBox="-32 -32 64 64">
+      <g stroke="currentColor" stroke-width="1" opacity=".55">
+        <path d="M0 -30 V30 M-30 0 H30 M-21 -21 L21 21 M21 -21 L-21 21"/>
+      </g>
+      <circle r="3" fill="currentColor"/>
+    </symbol>
+    <symbol id="batt" viewBox="0 0 120 60">
+      <rect x="2" y="6" width="116" height="48" rx="12" fill="#0B1026"/>
+      <rect x="2" y="6" width="116" height="48" rx="12" fill="none" stroke="#FFB547" stroke-width="2"/>
+      <rect x="9" y="13" width="102" height="34" rx="7" fill="#FFB547"/>
+      <path d="M58 18 L48 33 H58 L54 44 L68 27 H58 L62 18 Z" fill="#0B1026"/>
+      <circle cx="84" cy="30" r="2.6" fill="#0B1026"/><circle cx="92" cy="30" r="2.6" fill="#0B1026"/><circle cx="100" cy="30" r="2.6" fill="#0B1026" opacity=".35"/>
+      <rect x="20" y="2" width="14" height="6" rx="2" fill="#FFB547"/><rect x="86" y="2" width="14" height="6" rx="2" fill="#FFB547"/>
+    </symbol>
+    <symbol id="ok" viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <linearGradient id="beam" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#FFB547" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#FFB547" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glow"><stop offset="0" stop-color="#FFB547" stop-opacity=".5"/><stop offset="1" stop-color="#FFB547" stop-opacity="0"/></radialGradient>
+  </defs>
+</svg>
+
+<nav class="nav" aria-label="Navigation principale">
+  <div class="wrap">
+    <a class="logo" href="#top">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" class="f-amber"/><path d="M18 5 L9 18 H16 L13 27 L23 13 H16 Z" fill="#0B1026"/></svg>
+      VVolt
+    </a>
+    <div class="nav-links">
+      <a href="#atouts">Atouts</a>
+      <a href="#kit">Le kit</a>
+      <a href="#semaine">Une semaine</a>
+      <a href="#formules">Formules</a>
+      <a href="#pro">Professionnels</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="btn btn-amber" href="#formules">Formules</a>
+  </div>
+</nav>
+
+<main id="top">
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-top">
+        <div>
+          <p class="kicker">Abonnement · kit Pro inclus</p>
+          <h1 style="margin-top:16px">Roule de nuit, de jour, <em>sans jamais tomber en panne.</em></h1>
+        </div>
+        <div class="hero-side">
+          <p class="lead">VVolt transforme chaque kilomètre en énergie pour ton téléphone. Roue à dynamo moyeu, batterie 20 000 mAh, support à charge sans fil et phare LED : tout est dans la boîte, prêt à monter en 20 minutes.</p>
+          <div class="price-tag">
+            <span class="price-sub">dès</span>
+            <span class="price">50<sup> €/mois</sup></span>
+            <span class="price-sub">sur 12 mois · kit Pro inclus</span>
+          </div>
+          <div class="hero-ctas">
+            <a class="btn btn-amber" href="#formules">Voir les formules</a>
+            <a class="btn btn-line" href="#kit">Voir le contenu</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scene">
+      <svg viewBox="0 0 1200 500" role="img" aria-label="La nuit, un cycliste roule sur une route. Son phare éclaire devant lui, la batterie VVolt brille sur le cadre et son téléphone charge sur le guidon.">
+        <rect width="1200" height="500" class="f-night" fill="#0B1026"/>
+        <!-- stars -->
+        <g class="f-star">
+          <circle cx="80" cy="60" r="1.6" class="twinkle"/><circle cx="210" cy="120" r="1.2"/><circle cx="330" cy="40" r="1.8"/>
+          <circle cx="470" cy="90" r="1.2" class="twinkle"/><circle cx="560" cy="30" r="1.4"/><circle cx="880" cy="70" r="1.6"/>
+          <circle cx="980" cy="30" r="1.2" class="twinkle"/><circle cx="1100" cy="110" r="1.6"/><circle cx="150" cy="190" r="1"/>
+          <circle cx="1040" cy="180" r="1"/><circle cx="700" cy="60" r="1.1" class="twinkle"/>
+        </g>
+        <circle cx="1060" cy="84" r="34" fill="#F4F1FF" opacity=".9"/>
+        <circle cx="1074" cy="76" r="30" fill="#0B1026"/>
+        <!-- skyline -->
+        <path d="M0 410 V320 h60 v-40 h50 v60 h40 V260 h70 v150 Z M260 410 V300 h44 v-30 h56 v140 Z M880 410 V290 h70 v120 Z M960 410 V330 h50 v-50 h60 v130 Z M1080 410 V310 h120 v100 Z" class="f-n2"/>
+        <g class="f-amber" opacity=".55">
+          <rect x="80" y="300" width="8" height="10"/><rect x="180" y="290" width="8" height="10"/><rect x="300" y="320" width="8" height="10"/><rect x="900" y="310" width="8" height="10"/><rect x="1110" y="340" width="8" height="10"/>
+        </g>
+        <!-- road -->
+        <rect y="440" width="1200" height="60" class="f-n2"/>
+        <path d="M0 470 H1200" stroke="#2A3566" stroke-width="4" stroke-dasharray="40 30"/>
+        <!-- headlight beam -->
+        <path d="M760 228 L1200 280 L1200 470 L760 250 Z" fill="url(#beam)"/>
+        <!-- battery glow -->
+        <circle cx="668" cy="275" r="90" fill="url(#glow)"/>
+
+        <!-- rider back leg (behind bike) -->
+        <path d="M590 228 L660 318 L604 362" fill="none" stroke="#1E2A5C" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/>
+        <!-- bike -->
+        <use href="#bike" x="380" y="150" width="500" height="300" style="color:#C9D0F2"/>
+        <use href="#spokes" x="415" y="285" width="154" height="154" class="spin" style="color:#C9D0F2"/>
+        <use href="#spokes" x="690" y="285" width="154" height="154" class="spin" style="color:#C9D0F2"/>
+        <!-- bottle dynamo on front fork -->
+        <circle cx="767" cy="362" r="13" class="f-amber"/><circle cx="767" cy="362" r="5" fill="#0B1026"/>
+        <!-- frame bag with battery -->
+        <path d="M624 256 L708 252 L702 288 L636 291 Z" fill="#121A3A" stroke="#FFB547" stroke-width="2"/>
+        <use href="#batt" x="636" y="258" width="60" height="30"/>
+        <!-- cables -->
+        <path class="flow" d="M767 349 Q752 300 708 272" fill="none" stroke="#FFB547" stroke-width="3" stroke-linecap="round"/>
+        <path class="flow" d="M706 262 Q730 250 730 222" fill="none" stroke="#FFB547" stroke-width="3" stroke-linecap="round"/>
+        <!-- headlamp -->
+        <rect x="744" y="219" width="18" height="14" rx="4" class="f-amber"/>
+        <!-- rider -->
+        <path d="M586 226 L690 300 L650 392" fill="none" stroke="#1E2A5C" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M574 222 Q620 120 696 128" fill="none" stroke="#3F5BD8" stroke-width="46" stroke-linecap="round"/>
+        <path d="M690 136 Q722 170 734 214" fill="none" stroke="#3F5BD8" stroke-width="18" stroke-linecap="round"/>
+        <circle cx="736" cy="216" r="10" class="f-skin"/>
+        <circle cx="724" cy="96" r="27" class="f-skin"/>
+        <path d="M694 94 Q694 62 726 64 Q758 66 756 94 Q740 80 722 82 Q706 84 694 94 Z" fill="#F4F1FF"/>
+        <path d="M694 94 H758" stroke="#FFB547" stroke-width="4" stroke-linecap="round"/>
+        <!-- phone on bar -->
+        <rect x="716" y="180" width="26" height="40" rx="5" fill="#0B1026" stroke="#C9D0F2" stroke-width="2"/>
+        <rect x="720" y="185" width="18" height="28" rx="2" fill="#1B2550"/>
+        <path d="M730 189 L724 200 H729 L727 209 L734 197 H729 Z" class="f-amber"/>
+      </svg>
+      <div class="live" aria-hidden="true">
+        <div class="live-row"><span><i class="live-dot"></i>Charge en cours</span><b id="liveW">2,6 W</b></div>
+        <div class="live-row"><span>Batterie VVolt</span><b id="livePct">64 %</b></div>
+        <div class="live-bar"><i id="liveBar" style="width:64%"></i></div>
+        <div class="live-row"><span>Vitesse</span><b id="liveKmh">21 km/h</b></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="strip">
+    <div class="wrap">
+      <span><svg aria-hidden="true"><use href="#ok"/></svg>Roue dynamo moyeu incluse</span>
+      <span><svg aria-hidden="true"><use href="#ok"/></svg>Charge sans fil sur le guidon</span>
+      <span><svg aria-hidden="true"><use href="#ok"/></svg>Étanche IPX5</span>
+      <span><svg aria-hidden="true"><use href="#ok"/></svg>Garantie 3 ans</span>
+    </div>
+  </div>
+
+  <!-- BENTO -->
+  <section class="band" id="atouts">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">Pourquoi VVolt</p>
+        <h2>Ton vélo devient une centrale électrique de poche.</h2>
+        <p class="lead">Une dynamo qui produit, une batterie qui stocke, un support qui recharge. Trois pièces qui travaillent ensemble pour que ton téléphone ne lâche jamais en route.</p>
+      </div>
+      <div class="bento">
+        <div class="tile t-a">
+          <p class="kicker">Le principe</p>
+          <h3>Chaque coup de pédale est stocké</h3>
+          <p>La dynamo moyeu, cachée au centre de la roue avant, produit du courant dès 12 km/h, sans bruit et sans frottement. Le régulateur intégré le transforme en 5 V stable et le range dans la batterie de 20 000 mAh. Ton téléphone se sert quand il en a besoin, pendant le trajet ou une fois arrivé.</p>
+          <svg class="art" viewBox="0 0 420 150" aria-hidden="true">
+            <circle cx="60" cy="75" r="44" fill="none" stroke="#C9D0F2" stroke-width="3"/>
+            <use href="#spokes" x="16" y="31" width="88" height="88" class="spin" style="color:#C9D0F2"/>
+            <rect x="98" y="34" width="14" height="28" rx="5" class="f-mist"/>
+            <path class="flow" d="M112 48 H160" stroke="#FFB547" stroke-width="3" fill="none"/>
+            <use href="#batt" x="160" y="45" width="110" height="55"/>
+            <path class="flow" d="M270 72 H320" stroke="#FFB547" stroke-width="3" fill="none"/>
+            <rect x="320" y="30" width="46" height="84" rx="9" fill="#0B1026" stroke="#C9D0F2" stroke-width="2"/>
+            <rect x="326" y="38" width="34" height="62" rx="3" fill="#1B2550"/>
+            <path d="M345 50 L335 70 H344 L340 88 L353 66 H344 Z" class="f-amber"/>
+            <g font-family="IBM Plex Mono, monospace" font-size="11" fill="#A7B0D6">
+              <text x="30" y="140">6 V · 3 W</text><text x="182" y="140">20 000 mAh</text><text x="318" y="140">5 V · 2 A</text>
+            </g>
+          </svg>
+        </div>
+        <div class="tile t-b">
+          <svg class="ic" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 C13 15 9 21 9 26 a11 11 0 0 0 22 0 C31 21 27 15 20 4Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg>
+          <h3>Pluie, boue, pavés : rien ne l'arrête</h3>
+          <p>Coque IPX5 avec clapets en silicone sur les ports, bords anti-chocs et cellules montées sur mousse. Elle encaisse la route toute l'année.</p>
+        </div>
+        <div class="tile t-c">
+          <div class="num">0 <small>€ d'électricité</small></div>
+          <h3>Ton énergie est gratuite</h3>
+          <p>Une fois le kit installé, tu ne paies plus rien. Pas d'abonnement, pas de pile à changer. Juste tes jambes.</p>
+        </div>
+        <div class="tile t-d">
+          <svg class="ic" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 20h8M24 20h8M16 12v16M24 12v16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+          <h3>Charge sans fil sur le guidon</h3>
+          <p>Pose ton téléphone sur le support : il se recharge sans câble, en Qi2 jusqu'à 15 W.</p>
+        </div>
+        <div class="tile t-e">
+          <svg class="ic" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 L33 10 V20 C33 28 27 34 20 36 C13 34 7 28 7 20 V10 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg>
+          <h3>Protégée jusqu'à 15 V</h3>
+          <p>En descente, la dynamo s'emballe. Le régulateur absorbe les pics : ton téléphone ne reçoit qu'un 5 V propre.</p>
+        </div>
+        <div class="tile t-f">
+          <svg class="ic" viewBox="0 0 40 40" aria-hidden="true"><path d="M7 19 L20 7 L33 19 V33 H7 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M21 15 L16 24 H20 L18 30 L25 21 H21 Z" fill="currentColor"/></svg>
+          <h3>Aussi à la maison</h3>
+          <p>Semaine sans vélo ? Recharge-la en USB-C 20 W, pleine en 4 h environ.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KIT -->
+  <section class="band" id="kit" style="padding-top:0">
+    <div class="wrap kit">
+      <div class="kit-art">
+        <svg viewBox="0 0 520 420" role="img" aria-label="Le contenu du kit VVolt disposé à plat : batterie, dynamo, support de guidon, sacoche et câbles.">
+          <rect x="0" y="0" width="520" height="420" rx="28" fill="#121A3A" stroke="#2A3566"/>
+          <circle cx="260" cy="190" r="170" fill="url(#glow)" opacity=".6"/>
+          <use href="#batt" x="140" y="70" width="240" height="120"/>
+          <!-- dynamo -->
+          <g transform="translate(70 230)">
+            <rect x="0" y="0" width="44" height="96" rx="14" fill="#A7B0D6"/>
+            <rect x="8" y="-14" width="28" height="18" rx="6" fill="#C9D0F2"/>
+            <rect x="12" y="96" width="20" height="18" rx="4" fill="#2A3566"/>
+          </g>
+          <!-- phone mount -->
+          <g transform="translate(200 230)">
+            <rect x="0" y="0" width="80" height="120" rx="14" fill="none" stroke="#C9D0F2" stroke-width="5"/>
+            <rect x="26" y="120" width="28" height="28" rx="6" fill="#2A3566"/>
+            <path d="M-6 30 h12 M74 30 h12 M-6 90 h12 M74 90 h12" stroke="#FFB547" stroke-width="5" stroke-linecap="round"/>
+          </g>
+          <!-- bag -->
+          <path d="M320 260 L460 256 L448 320 L336 324 Z" fill="#0B1026" stroke="#2A3566" stroke-width="3"/>
+          <path d="M330 268 L452 264" stroke="#FFB547" stroke-width="2" stroke-dasharray="5 6"/>
+          <!-- cable coil -->
+          <g fill="none" stroke="#FFB547" stroke-width="3.5">
+            <circle cx="400" cy="372" r="26"/><circle cx="400" cy="372" r="17"/><circle cx="400" cy="372" r="8"/>
+          </g>
+          <g font-family="IBM Plex Mono, monospace" font-size="12" fill="#A7B0D6">
+            <text x="196" y="210">01 · Batterie</text><text x="40" y="372">02 · Roue dynamo</text>
+            <text x="198" y="400">03 · Support</text><text x="350" y="246">04 · Sacoche</text><text x="300" y="410">05 · Câbles</text>
+          </g>
+        </svg>
+      </div>
+      <div style="display:grid;gap:24px;min-width:0">
+        <div class="head" style="margin-bottom:0">
+          <p class="kicker">Dans la boîte</p>
+          <h2>Tout ce qu'il faut, rien à racheter.</h2>
+        </div>
+        <ul class="kit-list">
+          <li><span class="k">01</span><span><b>Batterie VVolt 20 000 mAh</b><small>Régulateur intégré, écran de niveau, sorties USB-C et USB-A, charge simultanée</small></span></li>
+          <li><span class="k">02</span><span><b>Roue avant avec dynamo moyeu 6 V / 3 W</b><small>Silencieuse, sans frottement, en 26", 27,5" ou 28", freins à disque ou à patins</small></span></li>
+          <li><span class="k">03</span><span><b>Support guidon à charge sans fil</b><small>Qi2 jusqu'à 15 W, aimanté, pour écrans de 4,7 à 6,9 pouces, rotation à 360°</small></span></li>
+          <li><span class="k">04</span><span><b>Phare LED avant 60 lux</b><small>Alimenté par la dynamo, avec feu de position qui reste allumé 4 minutes à l'arrêt</small></span></li>
+          <li><span class="k">05</span><span><b>Sacoche de cadre, sangle et câbles étanches</b><small>Deux fixations au choix pour la batterie, câbles gainés et serre-câbles réutilisables</small></span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEEK -->
+  <section class="band" id="semaine" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">Une semaine type</p>
+        <h2>40 minutes par jour suffisent.</h2>
+        <p class="lead">Exemple : un aller-retour de 40 minutes au travail du lundi au vendredi, et une balade de 2 heures le samedi. Voici l'énergie stockée chaque jour.</p>
+      </div>
+      <div class="week">
+        <div style="min-width:0">
+          <div class="chart" id="chart">
+            <div class="axis" id="axis"></div>
+            <div class="plot" id="plot"></div>
+            <div class="days"><span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span><span>Ven</span><span>Sam</span><span>Dim</span></div>
+          </div>
+        </div>
+        <div class="week-sum">
+          <p class="kicker">Total de la semaine</p>
+          <div class="big" id="weekWh">13,3 Wh</div>
+          <p>soit environ <b id="weekPhones" style="color:var(--star)">0,9</b> charge complète de smartphone, sans brancher quoi que ce soit.</p>
+        </div>
+        <p class="week-foot">Estimation : environ 2,5 Wh stockés par heure de pédalage à 15 km/h ou plus, pour un smartphone de 15 Wh (≈ 4 000 mAh). Les valeurs en Wh sont affichées au-dessus de chaque barre.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARE -->
+  <section class="band" id="comparer" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">Comparer</p>
+        <h2>Ce que les autres solutions ne font pas.</h2>
+      </div>
+      <div class="tbl-wrap">
+        <table class="cmp">
+          <thead>
+            <tr><th scope="col"></th><th scope="col" class="me">VVolt</th><th scope="col">Batterie externe classique</th><th scope="col">Chargeur USB de dynamo seul</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Se recharge en roulant</th><td class="me"><span class="yes">Oui</span></td><td><span class="no">Non</span></td><td><span class="yes">Oui</span></td></tr>
+            <tr><th scope="row">Stocke l'énergie</th><td class="me"><span class="yes">Oui, 20 000 mAh</span></td><td><span class="yes">Oui</span></td><td><span class="no">Non</span></td></tr>
+            <tr><th scope="row">Recharge le téléphone à l'arrêt</th><td class="me"><span class="yes">Oui</span></td><td><span class="yes">Oui</span></td><td><span class="no">Non</span></td></tr>
+            <tr><th scope="row">Dynamo fournie</th><td class="me"><span class="yes">Oui, moyeu</span></td><td><span class="no">Non</span></td><td><span class="no">Non</span></td></tr>
+            <tr><th scope="row">Fixation vélo et support guidon</th><td class="me"><span class="yes">Inclus</span></td><td><span class="no">À acheter</span></td><td><span class="no">À acheter</span></td></tr>
+            <tr><th scope="row">Charge sans fil</th><td class="me"><span class="yes">Qi2 15 W</span></td><td><span class="no">Rarement</span></td><td><span class="no">Non</span></td></tr>
+            <tr><th scope="row">Phare LED inclus</th><td class="me"><span class="yes">Oui, 60 lux</span></td><td><span class="no">Non</span></td><td><span class="no">Non</span></td></tr>
+            <tr><th scope="row">Étanche</th><td class="me"><span class="yes">IPX5</span></td><td><span class="no">Rarement</span></td><td>Selon modèle</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECS -->
+  <section class="band" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">Fiche technique</p>
+        <h2>Les détails.</h2>
+      </div>
+      <div class="specs">
+        <div class="spec"><span>Capacité</span><b>20 000 mAh · 74 Wh</b></div>
+        <div class="spec"><span>Dynamo</span><b>Moyeu · 6 V AC · 3 W</b></div>
+        <div class="spec"><span>Protection surtension</span><b>jusqu'à 15 V</b></div>
+        <div class="spec"><span>Sorties</span><b>USB-C + USB-A · sans fil Qi2 15 W</b></div>
+        <div class="spec"><span>Recharge secteur</span><b>USB-C 20 W · ≈ 4 h</b></div>
+        <div class="spec"><span>Charge simultanée</span><b>Oui (passthrough)</b></div>
+        <div class="spec"><span>Étanchéité</span><b>IPX5</b></div>
+        <div class="spec"><span>Batterie</span><b>150 × 76 × 28 mm · 410 g</b></div>
+        <div class="spec"><span>Garantie</span><b>3 ans</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANS -->
+  <section class="band" id="formules" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">Formules</p>
+        <h2>Roule équipé, sans payer le kit d'un coup.</h2>
+        <p class="lead">Choisis ta formule pour 12 mois. Le kit VVolt Pro complet est inclus dans les trois : batterie 20 000 mAh, roue à dynamo moyeu, support à charge sans fil et phare LED.</p>
+      </div>
+      <div class="plan-opts">
+        <label for="size">Taille de ta roue avant</label>
+        <select id="size">
+          <option>28 pouces (700C) · vélo de ville, VTC</option>
+          <option>27,5 pouces · VTT, gravel</option>
+          <option>26 pouces · VTT, vélo classique</option>
+        </select>
+      </div>
+      <div class="plans">
+        <article class="plan">
+          <div class="plan-name">Essentiel</div>
+          <p class="plan-desc">Le kit complet, pour rouler chargé au quotidien.</p>
+          <div class="plan-price"><b>50 €</b><span>/ mois</span></div>
+          <p class="plan-total">12 mois · 600 € au total</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#ok"/></svg><span>Kit VVolt Pro complet livré chez toi</span></li>
+            <li><svg aria-hidden="true"><use href="#ok"/></svg><span>Batterie 20 000 mAh et roue dynamo moyeu</span></li>
+            <li><svg aria-hidden="true"><use href="#ok"/></svg><span>Support à charge sans fil et phare LED</span></li>
+            <li><svg aria-hidden="true"><use href="#ok"/></svg><span>Garantie pendant toute la durée de l'abonnement</span></li>
+            <li><svg aria-hidden="true"><use href="#ok"/></svg><span>Assistance par e-mail</span></li>
+          </ul>
+          <button type="button" class="btn btn-line" data-plan="Essentiel" data-price="50">Choisir Essentiel</button>
+          <p class="plan-status" role="status"></p>
+        </article>
+        <article class="plan pop">
+          <span class="badge">Le plus choisi</span>
+          <div class="plan-name">Confort</div>
+          <p class="plan-desc">Le kit, plus une assurance pour rouler l'esprit tranquille.</p>
+          <div class="plan-price"><b>70 €</b><span>/ mois</span></div>
+          <p class="plan-total">12 mois · 840 € au total</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#ok"/></svg><span>Tout ce qui est dans Essentiel</span></li>
+            <li class="plus"><svg aria-hidden="true"><use href="#ok"/></svg><span>Assurance vol et casse du kit</span></li>
+            <li class="plus"><svg aria-hidden="true"><use href="#ok"/></svg><span>Remplacement express sous 48 h en cas de panne</span></li>
+            <li class="plus"><svg aria-hidden="true"><use href="#ok"/></svg><span>Assistance prioritaire par téléphone</span></li>
+          </ul>
+          <button type="button" class="btn btn-amber" data-plan="Confort" data-price="70">Choisir Confort</button>
+          <p class="plan-status" role="status"></p>
+        </article>
+        <article class="plan">
+          <div class="plan-name">Premium</div>
+          <p class="plan-desc">L'assurance, plus une batterie neuve au bout de 6 mois.</p>
+          <div class="plan-price"><b>90 €</b><span>/ mois</span></div>
+          <p class="plan-total">12 mois · 1 080 € au total</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#ok"/></svg><span>Tout ce qui est dans Confort</span></li>
+            <li class="plus"><svg aria-hidden="true"><use href="#ok"/></svg><span>Échange de batterie au 6<sup>e</sup> mois : on reprend la tienne et on t'en livre une nouvelle, plus endurante</span></li>
+            <li class="plus"><svg aria-hidden="true"><use href="#ok"/></svg><span>Révision de la roue dynamo offerte</span></li>
+          </ul>
+          <div class="swap" aria-label="Échange de batterie au sixième mois">
+            <span>Mois 1</span><i></i><span class="mid">Mois 6 · nouvelle batterie</span><i></i><span>Mois 12</span>
+          </div>
+          <button type="button" class="btn btn-line" data-plan="Premium" data-price="90">Choisir Premium</button>
+          <p class="plan-status" role="status"></p>
+        </article>
+      </div>
+      <p class="legal">Prix TTC. Engagement de 12 mois, prélèvement mensuel. Au bout des 12 mois, tu peux renouveler ta formule ou rendre le kit.</p>
+    </div>
+  </section>
+
+  <!-- PRO -->
+  <section class="band" id="pro" style="padding-top:0">
+    <div class="wrap">
+      <div class="pro">
+        <div class="pro-l">
+          <p class="kicker">Professionnels et collectivités</p>
+          <h2>Équipez toute une flotte de vélos.</h2>
+          <p class="lead">Pour les mairies, les entreprises et les loueurs, la batterie VVolt ne se prend pas en abonnement : elle s'achète directement, à l'unité. Vos vélos en libre-service rechargent les téléphones des usagers pendant qu'ils roulent.</p>
+          <ul class="pro-uses">
+            <li><svg aria-hidden="true"><use href="#ok"/></svg><span><b>Mairies et collectivités</b> : vélos en libre-service, vélos des agents municipaux</span></li>
+            <li><svg aria-hidden="true"><use href="#ok"/></svg><span><b>Loueurs de vélos</b> : un service en plus pour les touristes et les clients</span></li>
+            <li><svg aria-hidden="true"><use href="#ok"/></svg><span><b>Entreprises</b> : flottes de vélos de fonction et de livraison</span></li>
+          </ul>
+        </div>
+        <div class="pro-r">
+          <div class="pro-price"><span class="price">300 €</span><span class="price-sub">par batterie · achat comptant, sans abonnement</span></div>
+          <form class="pro-form" id="proForm" novalidate>
+            <label>Nombre de vélos à équiper
+              <input id="proQty" type="number" min="1" max="10000" value="50" inputmode="numeric">
+            </label>
+            <div class="pro-calc"><span>Total estimé</span><b id="proTotal">15 000 €</b></div>
+            <label>Organisation
+              <input id="proOrg" type="text" placeholder="Ex. : Mairie de ta ville" autocomplete="organization">
+            </label>
+            <label>E-mail professionnel
+              <input id="proMail" type="email" placeholder="contact@organisation.fr" autocomplete="email">
+            </label>
+            <button type="submit" class="btn btn-amber">Demander un devis</button>
+            <p class="status" id="proStatus" role="status"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="band" id="faq" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">Questions fréquentes</p>
+        <h2>On répond à tout.</h2>
+      </div>
+      <div class="faq">
+        <details open><summary>Comment fonctionne l'abonnement ?</summary><p>Tu choisis une formule pour 12 mois et tu paies chaque mois. Le kit VVolt Pro complet t'est livré dès le début. Au bout des 12 mois, tu peux renouveler ta formule ou rendre le kit.</p></details>
+        <details><summary>Comment se passe l'échange de batterie de la formule Premium ?</summary><p>Au 6<sup>e</sup> mois, on t'envoie une batterie neuve de nouvelle génération, qui tient plus longtemps. Tu nous renvoies l'ancienne dans le même colis, sans frais.</p></details>
+        <details><summary>Que couvre l'assurance des formules Confort et Premium ?</summary><p>Le vol et la casse de ton kit VVolt. En cas de panne, on te remplace le matériel sous 48 h.</p></details>
+        <details><summary>Je suis une mairie ou une entreprise, comment je fais ?</summary><p>Pour les professionnels, la batterie s'achète directement à 300 € l'unité, sans abonnement. Indique le nombre de vélos à équiper dans la section Professionnels et demande un devis.</p></details>
+        <details><summary>Mon vélo est compatible ?</summary><p>Oui, dans presque tous les cas. La roue dynamo existe en 26, 27,5 et 28 pouces, pour freins à disque ou à patins. Choisis simplement la taille de ta roue avant au moment de commander : elle est inscrite sur le flanc de ton pneu.</p></details>
+        <details><summary>Je vais sentir la dynamo en pédalant ?</summary><p>Presque pas. Une dynamo moyeu est conçue pour tourner en permanence, sans frottement sur le pneu et sans bruit. La plupart des cyclistes ne remarquent aucune différence.</p></details>
+        <details><summary>Combien de temps pour recharger mon téléphone ?</summary><p>Compte environ 15 à 20 % de téléphone par heure de pédalage. C'est pour ça que VVolt stocke l'énergie : elle se remplit trajet après trajet et recharge ton téléphone quand tu veux, même à l'arrêt.</p></details>
+        <details><summary>Ça marche sous la pluie ?</summary><p>Oui. La batterie est certifiée IPX5, la dynamo moyeu est scellée et les câbles ont des connecteurs étanches. Pense juste à bien refermer les clapets des ports USB.</p></details>
+        <details><summary>C'est compliqué à installer ?</summary><p>Non. Remplace ta roue avant par la roue dynamo (blocage rapide ou axe traversant), fixe la batterie dans la sacoche, le support et le phare sur le guidon, puis relie le tout avec les câbles fournis. La notice illustrée te guide pas à pas. Compte 20 minutes.</p></details>
+        <details><summary>Quels appareils je peux recharger ?</summary><p>Tous les téléphones (iPhone et Android), les GPS de vélo, les montres connectées et les lampes USB.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#top"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" class="f-amber"/><path d="M18 5 L9 18 H16 L13 27 L23 13 H16 Z" fill="#0B1026"/></svg>VVolt</a>
+    <p>© 2026 VVolt. L'énergie de tes jambes.</p>
+  </div>
+</footer>
+
+<div class="buybar">
+  <div class="wrap">
+    <div class="buybar-info">
+      <svg viewBox="0 0 120 60" aria-hidden="true"><use href="#batt"/></svg>
+      <div style="min-width:0"><b>VVolt · formules</b><span>dès 50 €/mois · kit Pro inclus</span></div>
+    </div>
+    <a class="btn btn-amber" href="#formules">Choisir</a>
+  </div>
+</div>
+
+<script>
+(function () {
+    const fmt = (n, d) => n.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
+
+  // Week chart (to scale): minutes per day → Wh at 2.5 Wh/h
+  const minutes = [40, 40, 40, 40, 40, 120, 0];
+  const wh = minutes.map(m => m / 60 * 2.5);
+  const MAX = 6; // axis max in Wh
+  const axis = document.getElementById('axis'), plot = document.getElementById('plot');
+  [0, 2, 4, 6].forEach(v => {
+    const s = document.createElement('span'); s.textContent = v + ' Wh'; s.style.bottom = (v / MAX * 100) + '%'; axis.appendChild(s);
+    if (v) { const g = document.createElement('div'); g.className = 'grid'; g.style.bottom = (v / MAX * 100) + '%'; plot.appendChild(g); }
+  });
+  wh.forEach(v => {
+    const cell = document.createElement('div'); cell.style.height = '100%'; cell.style.display = 'flex'; cell.style.alignItems = 'flex-end';
+    const b = document.createElement('div'); b.className = 'bar'; b.style.width = '100%'; b.style.height = (v / MAX * 100) + '%';
+    const l = document.createElement('b'); l.textContent = v ? fmt(v, 1) : '0'; b.appendChild(l);
+    cell.appendChild(b); plot.appendChild(cell);
+  });
+  const total = wh.reduce((a, b) => a + b, 0);
+  document.getElementById('weekWh').textContent = fmt(total, 1) + ' Wh';
+  document.getElementById('weekPhones').textContent = fmt(total / 15, 1);
+
+  // Live widget (illustrative)
+  let pct = 64;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) setInterval(() => {
+    pct = pct >= 99 ? 58 : pct + 1;
+    const kmh = 18 + Math.round(Math.random() * 6);
+    document.getElementById('livePct').textContent = pct + ' %';
+    document.getElementById('liveBar').style.width = pct + '%';
+    document.getElementById('liveKmh').textContent = kmh + ' km/h';
+    document.getElementById('liveW').textContent = fmt(Math.min(3, 1.8 + (kmh - 15) * 0.12), 1) + ' W';
+  }, 1600);
+
+  // Plans (demo)
+  document.querySelectorAll('[data-plan]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.plan-status').forEach(p => p.textContent = '');
+      const size = document.getElementById('size').value.split(' · ')[0];
+      btn.nextElementSibling.textContent = 'Formule ' + btn.dataset.plan + ' sélectionnée · ' + btn.dataset.price + ' €/mois · roue ' + size;
+    });
+  });
+
+  // Pro quote (demo, nothing is sent)
+  const pq = document.getElementById('proQty'), pt = document.getElementById('proTotal');
+  const proRender = () => { const n = Math.max(0, Math.floor(+pq.value || 0)); pt.textContent = fmt(n * 300, 0) + ' €'; };
+  pq.addEventListener('input', proRender); proRender();
+  document.getElementById('proForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const st = document.getElementById('proStatus');
+    const n = Math.floor(+pq.value || 0), mail = document.getElementById('proMail').value.trim();
+    if (n < 1) { st.textContent = 'Indique au moins 1 vélo à équiper.'; return; }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail)) { st.textContent = 'Indique une adresse e-mail valide pour recevoir le devis.'; return; }
+    st.textContent = 'Demande de devis prête : ' + n + ' batteries, ' + fmt(n * 300, 0) + ' €. (Démo : aucun envoi pour le moment.)';
+  });
+})();
+</script>
+</body>
+</html>
