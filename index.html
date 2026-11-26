@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Vélo-Volt : la batterie vélo qui se recharge en pédalant et alimente ton téléphone sur le guidon. 40 €.">
+<meta property="og:title" content="Vélo-Volt">
+<meta property="og:description" content="Tes jambes rechargent ton téléphone. La batterie vélo à 40 €.">
+<meta name="theme-color" content="#FF7A1A">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Ccircle cx='17' cy='17' r='16' fill='%23FF7A1A'/%3E%3Cpath d='M19 6 L10 19 H17 L14 28 L24 14 H17 Z' fill='%230F1C2D'/%3E%3C/svg%3E">
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}</style>
+<title>Vélo-Volt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: product landing — split hero with illustrated scene, then alternating full-width bands; one orange "reflector" accent carries the brand. */
+:root {
+  --bg: #F2F5F8;
+  --surface: #FFFFFF;
+  --sunk: #E6ECF2;
+  --ink: #0F1C2D;
+  --muted: #566577;
+  --line: #D3DCE6;
+  --volt: #FF7A1A;
+  --volt-ink: #B04800;
+  --volt-soft: #FFE6D3;
+  --petrol: #0F6C72;
+  --petrol-soft: #D5ECEC;
+  --skin-a: #C68B59;
+  --skin-b: #8D5524;
+  --hair: #2A1B12;
+  --pant: #24364D;
+  --white: #FFFFFF;
+  --f-display: "Archivo", "Arial Black", system-ui, sans-serif;
+  --f-body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --gut-l: max(16px, env(safe-area-inset-left, 0px));
+  --gut-r: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0A111B; --surface: #111B28; --sunk: #16222F; --ink: #E9EFF6; --muted: #95A3B4;
+    --line: #22334A; --volt: #FF8A33; --volt-ink: #FFA766; --volt-soft: #3A2312;
+    --petrol: #3DB3B8; --petrol-soft: #10302F; --pant: #3A5373; --hair: #120C08; --white: #FFFFFF;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0A111B; --surface: #111B28; --sunk: #16222F; --ink: #E9EFF6; --muted: #95A3B4;
+  --line: #22334A; --volt: #FF8A33; --volt-ink: #FFA766; --volt-soft: #3A2312;
+  --petrol: #3DB3B8; --petrol-soft: #10302F; --pant: #3A5373; --hair: #120C08; --white: #FFFFFF;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 17px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 60; background: var(--bg);
+}
+.wrap { max-width: 1160px; margin: 0 auto; padding-left: var(--gut-l); padding-right: var(--gut-r); }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.02; }
+h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 850; font-stretch: 112%; letter-spacing: -0.02em; }
+h3 { font-size: 1.2rem; font-weight: 750; font-stretch: 105%; line-height: 1.2; }
+p { margin: 0; }
+.eyebrow {
+  font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--volt-ink); font-weight: 600;
+}
+.lead { font-size: 1.15rem; color: var(--muted); max-width: 58ch; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--volt); outline-offset: 3px; border-radius: 6px; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 10px; border: 0; cursor: pointer;
+  font: 700 1rem/1 var(--f-body); text-decoration: none;
+  padding: 16px 24px; border-radius: 999px; transition: transform .15s ease, background .15s ease;
+}
+.btn-volt { background: var(--volt); color: #1A0D02; }
+.btn-volt:hover { transform: translateY(-2px); }
+.btn-ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px var(--line); }
+.btn-ghost:hover { box-shadow: inset 0 0 0 2px var(--ink); }
+
+/* Nav */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--f-display); font-weight: 900; font-stretch: 120%; font-size: 1.3rem; letter-spacing: -0.02em; }
+.logo-mark { width: 34px; height: 34px; }
+.nav-links { display: flex; gap: 26px; font-weight: 600; font-size: 0.95rem; }
+.nav-links a { text-decoration: none; color: var(--muted); }
+.nav-links a:hover { color: var(--ink); }
+.nav-cta { display: flex; align-items: center; gap: 12px; }
+.cart-pill { font-family: var(--f-mono); font-size: 0.85rem; padding: 8px 12px; border-radius: 999px; background: var(--sunk); font-variant-numeric: tabular-nums; }
+.nav .btn { padding: 11px 18px; font-size: 0.92rem; }
+@media (max-width: 860px) { .nav-links { display: none; } }
+@media (max-width: 420px) { .cart-pill { display: none; } }
+
+/* Hero */
+.hero { padding-block: 56px 40px; }
+.hero .wrap { display: grid; grid-template-columns: 1fr 1.08fr; gap: 40px; align-items: center; }
+.hero h1 {
+  font-size: clamp(2.8rem, 7vw, 5.6rem); font-weight: 900; font-stretch: 118%;
+  letter-spacing: -0.035em; line-height: 0.94; margin-top: 14px;
+}
+.hero h1 .hl { color: var(--volt); }
+.hero .lead { margin-top: 22px; }
+.price-row { display: flex; align-items: flex-end; gap: 18px; margin-top: 28px; flex-wrap: wrap; }
+.price { font-family: var(--f-display); font-weight: 900; font-stretch: 110%; font-size: 3.2rem; line-height: 1; letter-spacing: -0.03em; }
+.price small { font-size: 1.1rem; font-weight: 700; letter-spacing: 0; }
+.price-note { color: var(--muted); font-size: 0.92rem; line-height: 1.4; padding-bottom: 6px; }
+.hero-ctas { display: flex; gap: 12px; margin-top: 26px; flex-wrap: wrap; }
+.trust { display: flex; gap: 20px; margin-top: 28px; flex-wrap: wrap; font-size: 0.9rem; color: var(--muted); }
+.trust span { display: inline-flex; align-items: center; gap: 8px; }
+.trust svg { width: 18px; height: 18px; color: var(--petrol); flex: none; }
+.hero-art { min-width: 0; }
+.hero-art svg { width: 100%; height: auto; display: block; }
+@media (max-width: 900px) { .hero .wrap { grid-template-columns: 1fr; } .hero-art { order: -1; } }
+
+/* Illustration classes */
+.c-ink { fill: var(--ink); } .s-ink { stroke: var(--ink); }
+.c-volt { fill: var(--volt); } .s-volt { stroke: var(--volt); }
+.c-petrol { fill: var(--petrol); } .c-petrol-soft { fill: var(--petrol-soft); }
+.c-volt-soft { fill: var(--volt-soft); }
+.c-surface { fill: var(--surface); } .c-sunk { fill: var(--sunk); } .c-line { fill: var(--line); } .s-line { stroke: var(--line); }
+.c-muted { fill: var(--muted); } .s-muted { stroke: var(--muted); }
+.c-skin-a { fill: var(--skin-a); } .s-skin-a { stroke: var(--skin-a); }
+.c-skin-b { fill: var(--skin-b); } .s-skin-b { stroke: var(--skin-b); }
+.c-hair { fill: var(--hair); } .c-pant { fill: var(--pant); } .s-pant { stroke: var(--pant); }
+.c-white { fill: var(--white); }
+.bike { color: var(--ink); }
+
+.drop { animation: drop 3.6s ease-in-out infinite; transform-box: fill-box; }
+@keyframes drop { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+.pulse { animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+.flow { stroke-dasharray: 6 8; animation: flow 1.2s linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -28; } }
+@media (prefers-reduced-motion: reduce) { .drop, .pulse, .flow { animation: none; } html { scroll-behavior: auto; } }
+
+/* Figures band */
+.figures { border-block: 1px solid var(--line); background: var(--surface); }
+.figures .wrap { display: grid; grid-template-columns: repeat(4, 1fr); padding-block: 28px; gap: 20px; }
+.fig { display: flex; flex-direction: column; gap: 4px; }
+.fig b { font-family: var(--f-display); font-weight: 850; font-stretch: 112%; font-size: 2rem; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.fig span { color: var(--muted); font-size: 0.92rem; line-height: 1.35; }
+@media (max-width: 760px) { .figures .wrap { grid-template-columns: repeat(2, 1fr); } }
+
+section.band { padding-block: 96px; }
+.sec-head { display: grid; gap: 16px; max-width: 760px; margin-bottom: 48px; }
+
+/* How it works */
+.chain { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; position: relative; }
+.step { padding: 28px 28px 32px; display: grid; gap: 14px; align-content: start; border-left: 1px solid var(--line); }
+.step:first-child { border-left: 0; padding-left: 0; }
+.step-n { font-family: var(--f-mono); font-size: 0.85rem; color: var(--volt-ink); font-weight: 600; }
+.step-ic { width: 76px; height: 76px; }
+.step p { color: var(--muted); }
+.step .unit { font-family: var(--f-mono); font-size: 0.85rem; color: var(--ink); background: var(--sunk); padding: 4px 10px; border-radius: 6px; justify-self: start; }
+@media (max-width: 820px) {
+  .chain { grid-template-columns: 1fr; }
+  .step { border-left: 0; border-top: 1px solid var(--line); padding-left: 0; padding-right: 0; }
+  .step:first-child { border-top: 0; }
+}
+
+/* Scenes */
+.scenes-band { background: var(--sunk); }
+.scenes { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 20px; }
+.scene { background: var(--surface); border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.scene svg { width: 100%; height: auto; display: block; }
+.scene figcaption { padding: 20px 22px 24px; display: grid; gap: 6px; }
+.scene figcaption p { color: var(--muted); font-size: 0.95rem; }
+.scene figure, figure.scene { margin: 0; }
+@media (max-width: 900px) { .scenes { grid-template-columns: 1fr; } }
+
+/* Features */
+.feat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 56px; }
+.feat { display: grid; grid-template-columns: 44px 1fr; gap: 18px; padding-block: 28px; border-top: 1px solid var(--line); }
+.feat svg { width: 44px; height: 44px; color: var(--volt); }
+.feat h3 { margin-bottom: 8px; }
+.feat p { color: var(--muted); }
+@media (max-width: 760px) { .feat-grid { grid-template-columns: 1fr; } }
+
+/* Product spotlight */
+.spot { background: var(--ink); color: var(--bg); border-radius: 28px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; }
+.spot-art { background: color-mix(in srgb, var(--volt) 14%, var(--ink)); display: grid; place-items: center; padding: 32px; min-width: 0; }
+.spot-art svg { width: 100%; max-width: 420px; height: auto; }
+.spot-body { padding: 48px; display: grid; gap: 18px; align-content: center; min-width: 0; }
+.spot-body .eyebrow { color: var(--volt); }
+.spot-body p { color: color-mix(in srgb, var(--bg) 72%, var(--ink)); }
+.spot-list { list-style: none; padding: 0; margin: 6px 0 0; display: grid; gap: 10px; }
+.spot-list li { display: flex; gap: 12px; align-items: baseline; }
+.spot-list li::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: var(--volt); flex: none; transform: translateY(-1px); }
+@media (max-width: 860px) { .spot { grid-template-columns: 1fr; } .spot-body { padding: 32px 24px; } }
+
+/* Calculator */
+.calc { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; }
+.calc-in, .calc-out { background: var(--surface); border-radius: 22px; padding: 32px; min-width: 0; }
+.calc-out { background: var(--volt-soft); display: grid; gap: 18px; align-content: start; }
+.calc label { font-weight: 700; display: block; margin-bottom: 4px; }
+.calc .hint { color: var(--muted); font-size: 0.92rem; }
+.calc-val { font-family: var(--f-display); font-weight: 900; font-stretch: 112%; font-size: 3rem; line-height: 1; margin: 20px 0 10px; font-variant-numeric: tabular-nums; }
+.calc-val small { font-size: 1.1rem; font-weight: 700; color: var(--muted); }
+input[type=range] { width: 100%; accent-color: var(--volt); height: 32px; }
+.seg { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 22px; }
+.seg button { font: 600 0.9rem var(--f-body); border: 0; padding: 9px 14px; border-radius: 999px; background: var(--sunk); color: var(--ink); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.gauge { height: 18px; border-radius: 999px; background: color-mix(in srgb, var(--volt) 22%, var(--surface)); overflow: hidden; }
+.gauge i { display: block; height: 100%; width: 0; background: var(--volt); border-radius: inherit; transition: width .3s ease; }
+.out-big { font-family: var(--f-display); font-weight: 900; font-stretch: 112%; font-size: clamp(3rem, 7vw, 4.6rem); line-height: 0.95; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: var(--volt-ink); }
+.out-rows { display: grid; gap: 8px; font-size: 0.95rem; }
+.out-rows div { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid color-mix(in srgb, var(--volt) 30%, transparent); padding-top: 8px; }
+.out-rows b { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.calc-foot { color: var(--muted); font-size: 0.82rem; }
+@media (max-width: 820px) { .calc { grid-template-columns: 1fr; } .calc-in, .calc-out { padding: 24px; } }
+
+/* Specs + box */
+.specs-wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; }
+.specs { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.specs th, .specs td { text-align: left; padding: 13px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.specs th { font-weight: 600; color: var(--muted); width: 44%; padding-right: 16px; }
+.specs td { font-family: var(--f-mono); font-size: 0.9rem; }
+.box-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.box-list li { display: grid; grid-template-columns: 52px 1fr; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.box-list .qty { font-family: var(--f-mono); font-weight: 600; background: var(--sunk); border-radius: 10px; text-align: center; padding: 10px 0; font-variant-numeric: tabular-nums; }
+.box-list small { display: block; color: var(--muted); font-size: 0.88rem; }
+@media (max-width: 820px) { .specs-wrap { grid-template-columns: 1fr; } }
+
+/* Buy */
+.buy-band { background: var(--surface); border-block: 1px solid var(--line); }
+.buy { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.buy-art svg { width: 100%; height: auto; }
+.buy-card { display: grid; gap: 18px; }
+.buy-price { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.qty-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.stepper { display: inline-flex; align-items: center; border-radius: 999px; box-shadow: inset 0 0 0 2px var(--line); }
+.stepper button { width: 46px; height: 46px; border: 0; background: transparent; color: var(--ink); font-size: 1.3rem; cursor: pointer; border-radius: 999px; }
+.stepper output { min-width: 32px; text-align: center; font-family: var(--f-mono); font-weight: 600; font-variant-numeric: tabular-nums; }
+.total { font-family: var(--f-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.status { min-height: 1.6em; font-weight: 600; color: var(--petrol); }
+.perks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; color: var(--muted); font-size: 0.95rem; }
+.perks li { display: flex; gap: 10px; align-items: center; }
+.perks svg { width: 18px; height: 18px; color: var(--petrol); flex: none; }
+@media (max-width: 860px) { .buy { grid-template-columns: 1fr; } }
+
+/* FAQ */
+.faq { max-width: 820px; }
+.faq details { border-top: 1px solid var(--line); }
+.faq details:last-child { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; padding: 22px 0; font-weight: 700; font-size: 1.08rem; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--f-mono); color: var(--volt-ink); font-size: 1.3rem; line-height: 1; transition: transform .2s; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { padding-bottom: 22px; color: var(--muted); max-width: 66ch; }
+
+footer { padding-block: 48px; color: var(--muted); font-size: 0.9rem; }
+footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+</style>
+</head>
+<body>
+
+<!-- Reusable drawings -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Bike, 200x120 box. Rear hub (45,85), bottom bracket (95,88), front hub (155,85). -->
+    <symbol id="bike" viewBox="0 0 200 120" overflow="visible">
+      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="45" cy="85" r="31" stroke-width="3.2"/>
+        <circle cx="155" cy="85" r="31" stroke-width="3.2"/>
+        <circle cx="45" cy="85" r="3" stroke-width="2"/>
+        <circle cx="155" cy="85" r="3" stroke-width="2"/>
+        <path d="M45 85 L95 88 L84 40 Z" stroke-width="3.4"/>
+        <path d="M84 42 L143 40 L148 54 L95 88" stroke-width="3.4"/>
+        <path d="M148 54 L155 85" stroke-width="3.4"/>
+        <path d="M143 40 L141 29 M134 29 L150 27" stroke-width="3.4"/>
+        <path d="M84 40 L82 33 M74 33 L92 33" stroke-width="3.6"/>
+        <circle cx="95" cy="88" r="8" stroke-width="2.6"/>
+        <path d="M95 88 L103 99 M99 100 L108 98" stroke-width="3"/>
+      </g>
+    </symbol>
+    <!-- Battery body, 120x60 box -->
+    <symbol id="batt" viewBox="0 0 120 60">
+      <rect x="2" y="6" width="116" height="48" rx="12" class="c-ink"/>
+      <rect x="8" y="12" width="104" height="36" rx="8" class="c-volt"/>
+      <path d="M58 18 L48 33 H58 L54 44 L68 27 H58 L62 18 Z" class="c-ink"/>
+      <circle cx="84" cy="30" r="2.6" class="c-ink"/>
+      <circle cx="92" cy="30" r="2.6" class="c-ink"/>
+      <circle cx="100" cy="30" r="2.6" class="c-ink" opacity=".35"/>
+      <rect x="20" y="2" width="14" height="6" rx="2" class="c-ink"/>
+      <rect x="86" y="2" width="14" height="6" rx="2" class="c-ink"/>
+    </symbol>
+    <symbol id="ic-check" viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<nav class="nav" aria-label="Navigation principale">
+  <div class="wrap">
+    <a class="logo" href="#top">
+      <svg class="logo-mark" viewBox="0 0 34 34" aria-hidden="true">
+        <circle cx="17" cy="17" r="16" class="c-volt"/>
+        <path d="M19 6 L10 19 H17 L14 28 L24 14 H17 Z" class="c-ink"/>
+      </svg>
+      Vélo-Volt
+    </a>
+    <div class="nav-links">
+      <a href="#comment">Comment ça marche</a>
+      <a href="#atouts">Atouts</a>
+      <a href="#calcul">Calculateur</a>
+      <a href="#fiche">Fiche technique</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-cta">
+      <span class="cart-pill" id="cartPill" aria-live="polite">Panier · 0</span>
+      <a class="btn btn-volt" href="#acheter">Acheter · 40 €</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Batterie vélo · se recharge en pédalant</p>
+        <h1>Tes jambes rechargent <span class="hl">ton téléphone.</span></h1>
+        <p class="lead">Vélo-Volt se fixe sur le cadre ou le porte-bagages, se branche sur la dynamo et stocke l'énergie de chaque coup de pédale. Ton téléphone, posé sur le guidon, reste chargé du premier au dernier kilomètre. Et même une fois le vélo garé.</p>
+        <div class="price-row">
+          <div class="price">40 <small>€ TTC</small></div>
+          <p class="price-note">Batterie, régulateur, câbles<br>et fixations inclus</p>
+        </div>
+        <div class="hero-ctas">
+          <a class="btn btn-volt" href="#acheter">Je la veux
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="#comment">Voir comment ça marche</a>
+        </div>
+        <div class="trust">
+          <span><svg aria-hidden="true"><use href="#ic-check"/></svg>Garantie 2 ans</span>
+          <span><svg aria-hidden="true"><use href="#ic-check"/></svg>Résiste à la pluie (IPX5)</span>
+          <span><svg aria-hidden="true"><use href="#ic-check"/></svg>Montage en 10 minutes</span>
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <svg viewBox="0 0 600 440" role="img" aria-label="Une cycliste pose la batterie Vélo-Volt dans la sacoche de cadre de son vélo. Un câble relie la batterie au téléphone fixé sur le guidon.">
+          <!-- backdrop -->
+          <circle cx="400" cy="190" r="170" class="c-volt-soft"/>
+          <g class="s-line" stroke-width="2" fill="none">
+            <path d="M20 410 V330 h40 v-30 h36 v110 M110 410 V290 h50 v120 M500 410 V310 h30 v-24 h40 v124"/>
+          </g>
+          <rect x="0" y="408" width="600" height="4" rx="2" class="c-line"/>
+
+          <!-- person (behind the bike) -->
+          <g>
+            <!-- legs -->
+            <path d="M302 262 L298 404 H318 L326 268 Z" class="c-pant"/>
+            <path d="M328 266 L340 404 H360 L352 262 Z" class="c-pant"/>
+            <path d="M290 400 h32 a6 6 0 0 1 6 6 v4 h-38 Z" class="c-ink"/>
+            <path d="M336 400 h32 a6 6 0 0 1 6 6 v4 h-38 Z" class="c-ink"/>
+            <!-- torso / jacket -->
+            <path d="M296 152 Q326 140 356 152 L360 268 Q328 276 298 268 Z" class="c-petrol"/>
+            <path d="M326 150 V268" stroke-width="2" class="s-ink" opacity=".25"/>
+            <!-- neck & head -->
+            <rect x="318" y="128" width="16" height="22" rx="6" class="c-skin-a"/>
+            <circle cx="326" cy="112" r="24" class="c-skin-a"/>
+            <path d="M302 112 Q300 82 328 84 Q354 86 352 110 Q344 96 326 98 Q312 100 302 112 Z" class="c-hair"/>
+            <path d="M346 100 Q366 104 362 132 Q356 120 348 116 Z" class="c-hair"/>
+            <!-- arms reaching down to the battery -->
+            <path d="M302 162 Q290 205 334 226" fill="none" stroke-width="17" stroke-linecap="round" class="s-pant" style="stroke: var(--petrol)"/>
+            <path d="M352 162 Q384 196 396 224" fill="none" stroke-width="17" stroke-linecap="round" style="stroke: var(--petrol)"/>
+          </g>
+
+          <!-- bike -->
+          <use href="#bike" x="110" y="150" width="440" height="264" class="bike"/>
+          <!-- frame bag on top tube (bike coords 100..130 → scene) -->
+          <path d="M318 245 L392 243 L388 268 L330 270 Z" class="c-ink" opacity=".9"/>
+          <!-- rear rack hint -->
+          <path d="M200 236 L272 236 M210 236 L209 336" class="s-muted" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+          <!-- cable from bag to phone (along top tube) -->
+          <path class="flow s-volt" d="M392 252 Q420 248 430 240 L420 214" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+          <!-- phone on handlebar -->
+          <rect x="400" y="170" width="38" height="58" rx="7" class="c-ink"/>
+          <rect x="404" y="176" width="30" height="44" rx="3" class="c-petrol-soft"/>
+          <path d="M421 184 L413 199 H420 L417 211 L426 195 H419 Z" class="c-volt pulse"/>
+          <path d="M404 228 h30" class="s-ink" stroke-width="4" stroke-linecap="round"/>
+
+          <!-- battery held in hands, settling into the bag -->
+          <g class="drop">
+            <use href="#batt" x="324" y="204" width="76" height="38"/>
+            <!-- hands -->
+            <circle cx="332" cy="226" r="9" class="c-skin-a"/>
+            <circle cx="397" cy="224" r="9" class="c-skin-a"/>
+          </g>
+
+          <!-- label -->
+          <g font-family="JetBrains Mono, monospace" font-size="13" class="c-ink">
+            <path d="M470 160 L520 120 H584" class="s-ink" stroke-width="1.5" fill="none"/>
+            <text x="524" y="112">5 V · USB-C</text>
+            <path d="M300 300 L250 330" class="s-ink" stroke-width="1.5" fill="none" opacity="0"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- FIGURES -->
+  <div class="figures">
+    <div class="wrap">
+      <div class="fig"><b>10 000 mAh</b><span>De quoi recharger un smartphone 2 à 3 fois</span></div>
+      <div class="fig"><b>≈ 17 %</b><span>De téléphone gagné par heure de pédalage</span></div>
+      <div class="fig"><b>IPX5</b><span>Pluie, projections, routes mouillées : aucun souci</span></div>
+      <div class="fig"><b>240 g</b><span>Plus léger qu'une gourde pleine</span></div>
+    </div>
+  </div>
+
+  <!-- HOW -->
+  <section class="band" id="comment">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Comment ça marche</p>
+        <h2>De la pédale à l'écran, en trois étapes.</h2>
+        <p class="lead">Pas besoin d'être bricoleur. La roue fait tourner la dynamo, Vélo-Volt range le courant, et ton téléphone se sert quand il en a besoin.</p>
+      </div>
+      <div class="chain">
+        <div class="step">
+          <span class="step-n">Étape 1 · Produire</span>
+          <svg class="step-ic" viewBox="0 0 76 76" aria-hidden="true">
+            <circle cx="38" cy="38" r="34" class="c-volt-soft"/>
+            <circle cx="38" cy="38" r="22" fill="none" class="s-ink" stroke-width="3.5"/>
+            <circle cx="38" cy="38" r="8" class="c-volt"/>
+            <path d="M38 16 V30 M38 46 V60 M16 38 H30 M46 38 H60" class="s-ink" stroke-width="2.5"/>
+          </svg>
+          <h3>Tu pédales, la dynamo produit</h3>
+          <p>Vélo-Volt se branche sur la dynamo de ton vélo : moyeu dans la roue avant, ou bouteille qui roule contre le pneu. Dès 12 km/h, le courant arrive.</p>
+          <span class="unit">6 V · jusqu'à 3 W</span>
+        </div>
+        <div class="step">
+          <span class="step-n">Étape 2 · Stocker</span>
+          <svg class="step-ic" viewBox="0 0 76 76" aria-hidden="true">
+            <circle cx="38" cy="38" r="34" class="c-volt-soft"/>
+            <use href="#batt" x="12" y="24" width="52" height="26"/>
+          </svg>
+          <h3>La batterie fait le plein</h3>
+          <p>Le régulateur intégré lisse le courant irrégulier de la dynamo et protège tout le circuit, même dans les descentes les plus rapides. L'énergie est stockée au lieu d'être perdue.</p>
+          <span class="unit">Régulé 5 V · protégé 15 V</span>
+        </div>
+        <div class="step">
+          <span class="step-n">Étape 3 · Recharger</span>
+          <svg class="step-ic" viewBox="0 0 76 76" aria-hidden="true">
+            <circle cx="38" cy="38" r="34" class="c-volt-soft"/>
+            <rect x="26" y="14" width="24" height="44" rx="5" class="c-ink"/>
+            <rect x="29" y="19" width="18" height="32" rx="2" class="c-petrol-soft"/>
+            <path d="M39 24 L33 36 H38 L36 46 L43 33 H38 Z" class="c-volt"/>
+          </svg>
+          <h3>Ton téléphone se recharge</h3>
+          <p>Un câble discret longe le cadre jusqu'au support de guidon. Ton GPS, ta musique et tes appels tiennent tout le trajet. À l'arrêt, la batterie continue de charger.</p>
+          <span class="unit">Sortie USB-C · 2 A</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENES -->
+  <section class="band scenes-band" aria-labelledby="scenes-t">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Au quotidien</p>
+        <h2 id="scenes-t">Pensée pour celles et ceux qui roulent vraiment.</h2>
+      </div>
+      <div class="scenes">
+        <!-- Scene A: commute -->
+        <figure class="scene">
+          <svg viewBox="0 0 420 260" role="img" aria-label="Un cycliste roule en ville, la batterie dans la sacoche de cadre et le téléphone sur le guidon.">
+            <rect width="420" height="260" class="c-petrol-soft"/>
+            <g class="c-surface" opacity=".7">
+              <rect x="20" y="70" width="46" height="150"/><rect x="74" y="40" width="58" height="180"/>
+              <rect x="300" y="60" width="50" height="160"/><rect x="356" y="90" width="50" height="130"/>
+            </g>
+            <circle cx="330" cy="50" r="22" class="c-volt" opacity=".8"/>
+            <rect y="226" width="420" height="34" class="c-line"/>
+            <path d="M10 243 h40 M80 243 h40 M150 243 h40 M220 243 h40 M290 243 h40 M360 243 h40" class="s-ink" stroke-width="3" opacity=".25"/>
+            <!-- speed lines -->
+            <path d="M14 120 h50 M24 140 h40 M10 160 h56" class="s-ink" stroke-width="3" stroke-linecap="round" opacity=".3"/>
+            <!-- bike -->
+            <use href="#bike" x="80" y="58" width="280" height="168" class="bike"/>
+            <!-- bag + battery on top tube : bike(100..130,44..56) scale 1.4 → (220..262, 120..136) -->
+            <path d="M214 121 L262 120 L259 136 L222 137 Z" class="c-ink"/>
+            <rect x="222" y="124" width="30" height="9" rx="3" class="c-volt"/>
+            <!-- rider -->
+            <path d="M200 112 L232 158 L222 196" fill="none" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" class="s-pant"/>
+            <path d="M196 112 L246 150 L226 200" fill="none" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" class="s-pant"/>
+            <path d="M190 108 Q214 66 254 62" fill="none" stroke-width="22" stroke-linecap="round" style="stroke: var(--volt)"/>
+            <path d="M248 66 Q268 84 278 98" fill="none" stroke-width="10" stroke-linecap="round" style="stroke: var(--volt)"/>
+            <circle cx="279" cy="99" r="6" class="c-skin-b"/>
+            <circle cx="268" cy="44" r="15" class="c-skin-b"/>
+            <path d="M252 42 Q254 24 272 26 Q288 30 284 44 Q276 34 262 38 Z" class="c-ink"/>
+            <!-- phone -->
+            <rect x="268" y="80" width="14" height="22" rx="3" class="c-ink"/>
+            <rect x="270" y="83" width="10" height="15" rx="1" class="c-petrol-soft"/>
+          </svg>
+          <figcaption>
+            <h3>Le trajet du matin</h3>
+            <p>Vingt minutes pour aller au boulot, et ton téléphone arrive plus chargé qu'au départ. Le GPS reste allumé, la batterie ne bouge pas.</p>
+          </figcaption>
+        </figure>
+
+        <!-- Scene B: rack mounting -->
+        <figure class="scene">
+          <svg viewBox="0 0 300 260" role="img" aria-label="Une main fixe la batterie Vélo-Volt sur le porte-bagages arrière avec sa sangle.">
+            <rect width="300" height="260" class="c-volt-soft"/>
+            <!-- rear wheel -->
+            <circle cx="120" cy="190" r="90" fill="none" class="s-ink" stroke-width="5"/>
+            <circle cx="120" cy="190" r="6" class="c-ink"/>
+            <!-- rack -->
+            <path d="M40 112 H230 M60 112 L104 186 M200 112 L136 186" class="s-ink" stroke-width="6" stroke-linecap="round" fill="none"/>
+            <!-- battery on rack -->
+            <use href="#batt" x="80" y="66" width="104" height="52"/>
+            <!-- strap -->
+            <rect x="148" y="66" width="12" height="54" rx="3" class="c-petrol"/>
+            <!-- arm + hand from top right -->
+            <path d="M300 10 Q230 30 172 70" fill="none" stroke-width="26" stroke-linecap="round" style="stroke: var(--petrol)"/>
+            <path d="M178 64 Q160 70 154 82 Q158 92 170 88 Q182 80 186 72 Z" class="c-skin-a"/>
+            <circle cx="172" cy="74" r="13" class="c-skin-a"/>
+            <path d="M226 160 l14 -14 M240 168 l20 -6 M232 178 l10 10" class="s-volt" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+          <figcaption>
+            <h3>Sur le porte-bagages</h3>
+            <p>Une sangle, un clic. Pas de porte-bagages ? La sacoche de cadre fournie se glisse sur la barre au-dessus du pédalier.</p>
+          </figcaption>
+        </figure>
+
+        <!-- Scene C: handlebar GPS -->
+        <figure class="scene">
+          <svg viewBox="0 0 300 260" role="img" aria-label="Gros plan sur un téléphone fixé au guidon, en train de charger pendant la navigation GPS.">
+            <rect width="300" height="260" class="c-sunk"/>
+            <!-- handlebar -->
+            <path d="M0 196 Q150 176 300 196" fill="none" class="s-ink" stroke-width="14" stroke-linecap="round"/>
+            <rect x="136" y="180" width="28" height="80" rx="8" class="c-ink"/>
+            <!-- phone -->
+            <rect x="96" y="30" width="108" height="176" rx="18" class="c-ink"/>
+            <rect x="104" y="40" width="92" height="150" rx="10" class="c-petrol-soft"/>
+            <path d="M118 176 Q130 140 150 128 T176 80 L184 56" fill="none" class="s-volt" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 9"/>
+            <circle cx="118" cy="176" r="7" class="c-petrol"/>
+            <circle cx="184" cy="56" r="7" class="c-volt"/>
+            <rect x="112" y="46" width="44" height="14" rx="7" class="c-surface"/>
+            <path d="M126 49 L121 54 H125 L123 58 L129 52 H125 Z" class="c-volt"/>
+            <text x="133" y="57" font-family="JetBrains Mono, monospace" font-size="8" font-weight="600" class="c-ink">87%</text>
+            <!-- cable -->
+            <path class="flow s-volt" d="M150 206 Q150 230 210 240 T300 236" stroke-width="4" fill="none" stroke-linecap="round"/>
+          </svg>
+          <figcaption>
+            <h3>GPS toute la journée</h3>
+            <p>Navigation, Strava, musique : les applis qui vident ta batterie ne sont plus un problème, même sur une sortie de 100 km.</p>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="band" id="atouts">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Les atouts</p>
+        <h2>Tout ce qu'il faut. Rien de superflu.</h2>
+        <p class="lead">Chaque détail de Vélo-Volt a été pensé pour la route : la pluie, les vibrations, les pavés, les trajets de tous les jours.</p>
+      </div>
+      <div class="feat-grid">
+        <div class="feat">
+          <svg viewBox="0 0 44 44" aria-hidden="true"><path d="M8 22h10M26 22h10M18 14v16M26 14v16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+          <div><h3>Charge et recharge en même temps</h3><p>Grâce au passthrough, Vélo-Volt se remplit avec la dynamo pendant qu'elle recharge ton téléphone. Les deux en même temps, sans réglage.</p></div>
+        </div>
+        <div class="feat">
+          <svg viewBox="0 0 44 44" aria-hidden="true"><path d="M22 6 C14 18 10 24 10 29 a12 12 0 0 0 24 0 C34 24 30 18 22 6Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg>
+          <div><h3>Étanche IPX5</h3><p>Ports USB protégés par des clapets en silicone, coque soudée. Tu peux rouler sous une averse ou passer le vélo au jet d'eau.</p></div>
+        </div>
+        <div class="feat">
+          <svg viewBox="0 0 44 44" aria-hidden="true"><rect x="6" y="14" width="32" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><path d="M14 8v6M30 8v6M14 30v6M30 30v6" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+          <div><h3>Deux positions de montage</h3><p>Sur le porte-bagages avec la sangle, ou dans la sacoche de cadre fournie, sur la barre au-dessus du pédalier. Le câble jusqu'au guidon est alors plus court.</p></div>
+        </div>
+        <div class="feat">
+          <svg viewBox="0 0 44 44" aria-hidden="true"><path d="M22 5 L36 11 V22 C36 31 29 37 22 39 C15 37 8 31 8 22 V11 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M16 22l4 4 8-8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div><h3>Régulateur intégré et protégé</h3><p>Une dynamo peut dépasser 10 V en descente. Le régulateur de Vélo-Volt encaisse jusqu'à 15 V et ne laisse passer qu'un 5 V propre et stable vers ton téléphone.</p></div>
+        </div>
+        <div class="feat">
+          <svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="11" cy="22" r="4" fill="currentColor"/><circle cx="22" cy="22" r="4" fill="currentColor"/><circle cx="33" cy="22" r="4" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+          <div><h3>Niveau de charge visible d'un coup d'œil</h3><p>Quatre LED indiquent le niveau. Une LED orange clignote quand la dynamo charge : tu vois tout de suite que ça marche.</p></div>
+        </div>
+        <div class="feat">
+          <svg viewBox="0 0 44 44" aria-hidden="true"><path d="M8 30 Q14 10 22 22 T36 14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+          <div><h3>Câble gainé de 1,2 m</h3><p>Câble USB-C coudé dans une gaine spirale, avec des serre-câbles réutilisables. Il suit le cadre sans gêner la direction quand tu tournes le guidon.</p></div>
+        </div>
+        <div class="feat">
+          <svg viewBox="0 0 44 44" aria-hidden="true"><path d="M6 32 L22 8 L38 32 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M14 32 L22 20 L30 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg>
+          <div><h3>Coque anti-chocs</h3><p>Bords en caoutchouc et cellules montées sur mousse : les pavés, les trottoirs et les vibrations ne lui font pas peur.</p></div>
+        </div>
+        <div class="feat">
+          <svg viewBox="0 0 44 44" aria-hidden="true"><path d="M8 20 L22 8 L36 20 V36 H8 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M23 18 L18 27 H22 L20 33 L27 24 H23 Z" fill="currentColor"/></svg>
+          <div><h3>Rechargeable aussi à la maison</h3><p>Pas roulé cette semaine ? Branche-la en USB-C comme n'importe quelle batterie externe. Pleine en 3 h environ.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPOTLIGHT -->
+  <section class="band" style="padding-top:0">
+    <div class="wrap">
+      <div class="spot">
+        <div class="spot-art">
+          <svg viewBox="0 0 400 300" role="img" aria-label="La batterie Vélo-Volt, vue de face, avec ses LED et son câble.">
+            <ellipse cx="200" cy="262" rx="150" ry="14" fill="#000" opacity=".25"/>
+            <use href="#batt" x="50" y="70" width="300" height="150"/>
+            <text x="200" y="232" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="900" font-size="20" letter-spacing="1" class="c-ink" opacity="0">VÉLO-VOLT</text>
+            <path class="flow" d="M340 150 Q380 160 380 210 T340 270" fill="none" stroke="#FF8A33" stroke-width="5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="spot-body">
+          <p class="eyebrow">Pourquoi 40 €</p>
+          <h2>Le prix d'une batterie externe. Plus jamais de panne.</h2>
+          <p>Une bonne batterie externe coûte déjà 25 à 30 €. Pour 40 €, Vélo-Volt ajoute le régulateur de dynamo, les fixations et le câblage étanche. Tout ce qu'il faut pour transformer ton vélo en chargeur.</p>
+          <ul class="spot-list">
+            <li>Aucune pile à acheter, aucun abonnement</li>
+            <li>Compatible avec les dynamos 6 V du marché</li>
+            <li>Fonctionne avec iPhone, Android, GPS de vélo et lampes USB</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALCULATOR -->
+  <section class="band" id="calcul" style="padding-top:24px">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Calculateur</p>
+        <h2>Combien tu récupères en roulant ?</h2>
+        <p class="lead">Bouge le curseur selon tes trajets. Le calcul suppose une dynamo 6 V / 3 W et une vitesse de 15 km/h ou plus.</p>
+      </div>
+      <div class="calc">
+        <div class="calc-in">
+          <label for="mins">Temps de vélo par jour</label>
+          <p class="hint">Aller-retour compris</p>
+          <div class="calc-val"><span id="minsOut">40</span> <small>min</small></div>
+          <input id="mins" type="range" min="10" max="180" step="5" value="40" aria-describedby="minsOut">
+          <p class="hint" style="margin-top:22px">Jours de vélo par semaine</p>
+          <div class="seg" role="group" aria-label="Jours de vélo par semaine" id="days">
+            <button type="button" data-d="2" aria-pressed="false">2 j</button>
+            <button type="button" data-d="3" aria-pressed="false">3 j</button>
+            <button type="button" data-d="5" aria-pressed="true">5 j</button>
+            <button type="button" data-d="7" aria-pressed="false">7 j</button>
+          </div>
+        </div>
+        <div class="calc-out" aria-live="polite">
+          <p class="eyebrow">Chaque jour, tu récupères</p>
+          <div class="out-big"><span id="pct">13</span> %</div>
+          <p>de la batterie d'un smartphone</p>
+          <div class="gauge" aria-hidden="true"><i id="gauge"></i></div>
+          <div class="out-rows">
+            <div><span>Énergie produite par jour</span><b id="whDay">1,7 Wh</b></div>
+            <div><span>Distance par jour (≈ 18 km/h)</span><b id="kmDay">12 km</b></div>
+            <div><span>Charges complètes par semaine</span><b id="fullWeek">0,7</b></div>
+          </div>
+          <p class="calc-foot">Estimation : environ 2,5 Wh stockés par heure de pédalage, pour un smartphone de 15 Wh (≈ 4 000 mAh). Le résultat réel dépend de ta dynamo, de ta vitesse et de ton téléphone.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECS -->
+  <section class="band" id="fiche" style="padding-top:24px">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Fiche technique</p>
+        <h2>Les chiffres, sans détour.</h2>
+      </div>
+      <div class="specs-wrap">
+        <div style="overflow-x:auto">
+          <table class="specs">
+            <tbody>
+              <tr><th scope="row">Capacité</th><td>10 000 mAh · 37 Wh</td></tr>
+              <tr><th scope="row">Entrée dynamo</th><td>6 V AC · 3 W max</td></tr>
+              <tr><th scope="row">Protection surtension</th><td>jusqu'à 15 V</td></tr>
+              <tr><th scope="row">Entrée secteur</th><td>USB-C · 5 V 2 A · pleine en ≈ 3 h</td></tr>
+              <tr><th scope="row">Sortie</th><td>USB-C + USB-A · 5 V 2 A</td></tr>
+              <tr><th scope="row">Charge simultanée</th><td>Oui (passthrough)</td></tr>
+              <tr><th scope="row">Étanchéité</th><td>IPX5</td></tr>
+              <tr><th scope="row">Dimensions</th><td>142 × 72 × 24 mm</td></tr>
+              <tr><th scope="row">Poids</th><td>240 g (batterie seule)</td></tr>
+              <tr><th scope="row">Température d'utilisation</th><td>-10 °C à +45 °C</td></tr>
+              <tr><th scope="row">Garantie</th><td>2 ans</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3 style="margin-bottom:12px">Dans la boîte</h3>
+          <ul class="box-list">
+            <li><span class="qty">×1</span><span>Batterie Vélo-Volt 10 000 mAh<small>avec régulateur intégré</small></span></li>
+            <li><span class="qty">×1</span><span>Sacoche de cadre<small>fermeture velcro, passe-câble</small></span></li>
+            <li><span class="qty">×1</span><span>Sangle de porte-bagages<small>réglable, boucle rapide</small></span></li>
+            <li><span class="qty">×1</span><span>Câble dynamo<small>connecteurs étanches, 60 cm</small></span></li>
+            <li><span class="qty">×1</span><span>Câble USB-C coudé gainé<small>1,2 m, jusqu'au guidon</small></span></li>
+            <li><span class="qty">×8</span><span>Serre-câbles réutilisables</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUY -->
+  <section class="band buy-band" id="acheter">
+    <div class="wrap buy">
+      <div class="buy-art">
+        <svg viewBox="0 0 440 300" role="img" aria-label="Le kit Vélo-Volt complet : batterie, sacoche de cadre et câbles.">
+          <rect x="10" y="20" width="420" height="260" rx="28" class="c-volt-soft"/>
+          <!-- frame bag -->
+          <path d="M60 200 L250 196 L236 254 L90 258 Z" class="c-ink"/>
+          <path d="M70 206 L240 202" class="s-volt" stroke-width="3" stroke-dasharray="6 6"/>
+          <!-- battery -->
+          <use href="#batt" x="120" y="70" width="210" height="105"/>
+          <!-- cable coil -->
+          <g fill="none" class="s-ink" stroke-width="4">
+            <circle cx="350" cy="220" r="34"/><circle cx="350" cy="220" r="24"/><circle cx="350" cy="220" r="14"/>
+          </g>
+          <path d="M384 220 Q410 200 400 160" fill="none" class="s-ink" stroke-width="4" stroke-linecap="round"/>
+          <rect x="392" y="146" width="16" height="18" rx="3" class="c-volt"/>
+        </svg>
+      </div>
+      <div class="buy-card">
+        <p class="eyebrow">Kit complet</p>
+        <h2>Vélo-Volt</h2>
+        <div class="buy-price">
+          <span class="price">40 <small>€ TTC</small></span>
+        </div>
+        <p class="lead" style="font-size:1rem">Batterie 10 000 mAh avec régulateur, sacoche de cadre, sangle de porte-bagages et câbles étanches. Il ne te faut qu'un vélo équipé d'une dynamo.</p>
+        <div class="qty-row">
+          <div class="stepper" role="group" aria-label="Quantité">
+            <button type="button" id="minus" aria-label="Retirer un">−</button>
+            <output id="qty" aria-live="polite">1</output>
+            <button type="button" id="plus" aria-label="Ajouter un">+</button>
+          </div>
+          <span class="total">Total : <span id="total">40,00 €</span></span>
+        </div>
+        <div><button type="button" class="btn btn-volt" id="addCart">Ajouter au panier</button></div>
+        <p class="status" id="status" role="status"></p>
+        <ul class="perks">
+          <li><svg aria-hidden="true"><use href="#ic-check"/></svg>Garantie 2 ans</li>
+          <li><svg aria-hidden="true"><use href="#ic-check"/></svg>14 jours pour changer d'avis</li>
+          <li><svg aria-hidden="true"><use href="#ic-check"/></svg>Notice de montage illustrée, étape par étape</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="band" id="faq">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Questions fréquentes</p>
+        <h2>Tu te poses la question ? On y répond.</h2>
+      </div>
+      <div class="faq">
+        <details open>
+          <summary>La dynamo est-elle incluse ?</summary>
+          <p>Non. Vélo-Volt se branche sur la dynamo déjà présente sur ton vélo : une dynamo moyeu (dans la roue avant) ou une dynamo bouteille (contre le pneu), en 6 V. Si ton vélo n'en a pas, une dynamo bouteille se trouve pour une vingtaine d'euros et s'installe en quelques minutes.</p>
+        </details>
+        <details>
+          <summary>Est-ce que je sens une différence en pédalant ?</summary>
+          <p>Avec une dynamo moyeu, presque pas : elle est conçue pour tourner en permanence. Avec une dynamo bouteille, tu sens une légère résistance, comparable à celle d'un éclairage classique.</p>
+        </details>
+        <details>
+          <summary>Combien de temps pour recharger mon téléphone ?</summary>
+          <p>La dynamo produit l'équivalent d'un chargeur lent. Compte environ 15 à 20 % de téléphone par heure de pédalage. C'est pour ça que Vélo-Volt stocke l'énergie : elle se remplit trajet après trajet, et recharge ton téléphone quand tu veux, même à l'arrêt.</p>
+        </details>
+        <details>
+          <summary>Je peux rouler sous la pluie ?</summary>
+          <p>Oui. Vélo-Volt est certifiée IPX5 : elle résiste à la pluie et aux projections d'eau. Pense juste à bien refermer les clapets des ports USB.</p>
+        </details>
+        <details>
+          <summary>Ça marche avec mon téléphone ?</summary>
+          <p>Oui, avec tous les téléphones qui se chargent en USB-C ou avec un câble USB (iPhone avec câble Lightning ou USB-C, Android). Elle recharge aussi les GPS de vélo, les montres et les lampes USB.</p>
+        </details>
+        <details>
+          <summary>Comment je l'installe ?</summary>
+          <p>Fixe la batterie sur le porte-bagages ou glisse-la dans la sacoche de cadre. Branche le câble dynamo, fais passer le câble USB-C le long du cadre avec les serre-câbles, et laisse un peu de jeu au niveau du guidon pour pouvoir tourner. Compte 10 minutes, sans outil.</p>
+        </details>
+        <details>
+          <summary>Je peux la recharger sans vélo ?</summary>
+          <p>Oui. Elle se recharge sur n'importe quel chargeur USB-C, comme une batterie externe classique. Pleine en 3 heures environ.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#top">
+      <svg class="logo-mark" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="16" class="c-volt"/><path d="M19 6 L10 19 H17 L14 28 L24 14 H17 Z" class="c-ink"/></svg>
+      Vélo-Volt
+    </a>
+    <p>© 2026 Vélo-Volt. Roule, recharge, répète.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const PRICE = 40;
+  const fmt = (n, d = 0) => n.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
+
+  // Calculator
+  const mins = document.getElementById('mins');
+  const daysGroup = document.getElementById('days');
+  let days = 5;
+  const WH_PER_HOUR = 2.5, PHONE_WH = 15, KMH = 18;
+  function calc() {
+    const m = +mins.value;
+    const wh = m / 60 * WH_PER_HOUR;
+    const pct = Math.round(wh / PHONE_WH * 100);
+    document.getElementById('minsOut').textContent = m;
+    document.getElementById('pct').textContent = pct;
+    document.getElementById('gauge').style.width = Math.min(100, pct) + '%';
+    document.getElementById('whDay').textContent = fmt(wh, 1) + ' Wh';
+    document.getElementById('kmDay').textContent = fmt(m / 60 * KMH) + ' km';
+    document.getElementById('fullWeek').textContent = fmt(wh * days / PHONE_WH, 1);
+  }
+  mins.addEventListener('input', calc);
+  daysGroup.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    days = +b.dataset.d;
+    daysGroup.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+    calc();
+  });
+  calc();
+
+  // Cart (demo)
+  let qty = 1, cart = 0;
+  const qtyEl = document.getElementById('qty'), totalEl = document.getElementById('total');
+  const pill = document.getElementById('cartPill'), status = document.getElementById('status');
+  function renderQty() { qtyEl.textContent = qty; totalEl.textContent = fmt(qty * PRICE, 2) + ' €'; }
+  document.getElementById('minus').addEventListener('click', () => { qty = Math.max(1, qty - 1); renderQty(); });
+  document.getElementById('plus').addEventListener('click', () => { qty = Math.min(10, qty + 1); renderQty(); });
+  document.getElementById('addCart').addEventListener('click', () => {
+    cart += qty;
+    pill.textContent = 'Panier · ' + cart;
+    status.textContent = qty + (qty > 1 ? ' Vélo-Volt ajoutées' : ' Vélo-Volt ajoutée') + ' au panier. Total panier : ' + fmt(cart * PRICE, 2) + ' €.';
+  });
+  renderQty();
+})();
+</script>
+</body>
+</html>
